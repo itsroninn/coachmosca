@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Leads | Coach do Mosca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a111d;
+            --panel: #121c2b;
+            --panel-soft: #182436;
+            --line: rgba(214, 180, 108, 0.2);
+            --gold: #d6b46c;
+            --blue: #4f77b9;
+            --red: #b5453c;
+            --text: #f2eee5;
+            --muted: #a8b0bd;
+            --radius: 14px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Rajdhani", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top right, rgba(79, 119, 185, 0.18), transparent 28%),
+                radial-gradient(circle at top left, rgba(181, 69, 60, 0.14), transparent 24%),
+                var(--bg);
+        }
+
+        .wrap {
+            width: min(calc(100% - 32px), 1240px);
+            margin: 24px auto 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .title {
+            font-family: "Cinzel", serif;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin: 0 0 6px;
+            text-transform: uppercase;
+        }
+
+        .subtitle { margin: 0; color: var(--muted); }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)), var(--panel);
+        }
+
+        .toolbar {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 0.7fr 0.7fr auto;
+            gap: 10px;
+            padding: 14px;
+            align-items: end;
+        }
+
+        .field { display: grid; gap: 6px; }
+        .field label { color: var(--muted); font-size: .95rem; }
+
+        input, select, button {
+            min-height: 42px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: var(--panel-soft);
+            color: var(--text);
+            font: inherit;
+            padding: 0 12px;
+        }
+
+        button {
+            cursor: pointer;
+            border: 1px solid rgba(214, 180, 108, 0.4);
+            background: linear-gradient(135deg, #f1d28c, #d6b46c);
+            color: #111;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        button.secondary {
+            background: rgba(79, 119, 185, 0.2);
+            border-color: rgba(79, 119, 185, 0.4);
+            color: var(--text);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 14px 0;
+        }
+
+        .stat {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.6rem;
+            color: var(--gold);
+        }
+
+        .stat span { color: var(--muted); }
+
+        .table-wrap {
+            overflow: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            vertical-align: top;
+        }
+
+        th {
+            position: sticky;
+            top: 0;
+            background: #142033;
+            color: var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-size: .86rem;
+        }
+
+        td { color: #e7e0d2; }
+        td small { color: var(--muted); }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: .84rem;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .status { margin-top: 10px; color: var(--muted); }
+        .danger { color: #ef9c95; }
+
+        @media (max-width: 980px) {
+            .toolbar { grid-template-columns: 1fr 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header class="header">
+            <div>
+                <h1 class="title">Painel de Leads do Mosca</h1>
+                <p class="subtitle">Visualizacao comercial para acompanhamento, filtro e exportacao.</p>
+            </div>
+        </header>
+
+        <section class="panel">
+            <div class="toolbar">
+                <div class="field">
+                    <label for="q">Busca (nome, whatsapp, objetivo)</label>
+                    <input id="q" type="text" placeholder="Ex: Rafael, 7199, macro, etc.">
+                </div>
+
+                <div class="field">
+                    <label for="plano">Plano</label>
+                    <select id="plano">
+                        <option value="">Todos</option>
+                        <option value="avulso">Avulso</option>
+                        <option value="pacote-6h">Pacote 6h</option>
+                        <option value="pacote-12h">Pacote 12h</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="min_elo">Elo minimo</label>
+                    <input id="min_elo" type="number" min="0" value="1100">
+                </div>
+
+                <div class="field">
+                    <label for="limit">Quantidade</label>
+                    <select id="limit">
+                        <option value="50">50</option>
+                        <option value="100" selected>100</option>
+                        <option value="300">300</option>
+                        <option value="1000">1000</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>&nbsp;</label>
+                    <button id="btnBuscar" type="button">Atualizar</button>
+                </div>
+            </div>
+
+            <div class="toolbar" style="grid-template-columns: auto auto 1fr; border-top: 1px solid rgba(255,255,255,.08); padding-top: 10px;">
+                <button id="btnCsv" class="secondary" type="button">Exportar CSV</button>
+                <button id="btnLimpar" class="secondary" type="button">Limpar filtros</button>
+                <div class="status" id="status">Carregando...</div>
+            </div>
+
+            <div class="stats" id="stats">
+                <article class="stat"><strong id="s-total">0</strong><span>Total listados</span></article>
+                <article class="stat"><strong id="s-avulso">0</strong><span>Avulso</span></article>
+                <article class="stat"><strong id="s-6h">0</strong><span>Pacote 6h</span></article>
+                <article class="stat"><strong id="s-12h">0</strong><span>Pacote 12h</span></article>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Nome</th>
+                            <th>WhatsApp</th>
+                            <th>Elo</th>
+                            <th>Plano</th>
+                            <th>Horas avulsas</th>
+                            <th>Objetivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const el = {
+            q: document.getElementById("q"),
+            plano: document.getElementById("plano"),
+            minElo: document.getElementById("min_elo"),
+            limit: document.getElementById("limit"),
+            btnBuscar: document.getElementById("btnBuscar"),
+            btnCsv: document.getElementById("btnCsv"),
+            btnLimpar: document.getElementById("btnLimpar"),
+            status: document.getElementById("status"),
+            tbody: document.getElementById("tbody"),
+            sTotal: document.getElementById("s-total"),
+            sAvulso: document.getElementById("s-avulso"),
+            s6h: document.getElementById("s-6h"),
+            s12h: document.getElementById("s-12h")
+        };
+
+        function getFilters() {
+            return {
+                q: el.q.value.trim(),
+                plano: el.plano.value,
+                min_elo: el.minElo.value.trim() || "0",
+                limit: el.limit.value
+            };
+        }
+
+        function toQuery(params) {
+            const query = new URLSearchParams();
+            Object.entries(params).forEach(([k, v]) => {
+                if (v !== "") query.set(k, v);
+            });
+            return query.toString();
+        }
+
+        function planoLabel(value) {
+            if (value === "avulso") return "Avulso";
+            if (value === "pacote-6h") return "Pacote 6h";
+            if (value === "pacote-12h") return "Pacote 12h";
+            return value || "-";
+        }
+
+        function formatDate(value) {
+            if (!value) return "-";
+            const dt = new Date(value);
+            if (isNaN(dt.getTime())) return value;
+            return dt.toLocaleString("pt-BR");
+        }
+
+        function renderRows(items) {
+            if (!items.length) {
+                el.tbody.innerHTML = '<tr><td colspan="8"><span class="danger">Nenhum lead encontrado para esse filtro.</span></td></tr>';
+                return;
+            }
+
+            el.tbody.innerHTML = items.map((item) => {
+                return `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td><small>${formatDate(item.created_at)}</small></td>
+                        <td>${escapeHtml(item.nome)}</td>
+                        <td>${escapeHtml(item.whatsapp)}</td>
+                        <td>${item.elo}</td>
+                        <td><span class="pill">${planoLabel(item.plano)}</span></td>
+                        <td>${item.horas_avulsas || "-"}</td>
+                        <td>${escapeHtml(item.objetivo || "-")}</td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function renderStats(items) {
+            const avulso = items.filter((i) => i.plano === "avulso").length;
+            const p6 = items.filter((i) => i.plano === "pacote-6h").length;
+            const p12 = items.filter((i) => i.plano === "pacote-12h").length;
+
+            el.sTotal.textContent = items.length;
+            el.sAvulso.textContent = avulso;
+            el.s6h.textContent = p6;
+            el.s12h.textContent = p12;
+        }
+
+        function escapeHtml(text) {
+            return String(text)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;");
+        }
+
+        async function loadLeads() {
+            const filters = getFilters();
+            const query = toQuery(filters);
+            el.status.textContent = "Carregando leads...";
+
+            try {
+                const response = await fetch(`/api/leads?${query}`);
+                if (!response.ok) throw new Error("Falha ao consultar leads.");
+                const data = await response.json();
+                renderRows(data.items || []);
+                renderStats(data.items || []);
+                el.status.textContent = `Atualizado: ${new Date().toLocaleString("pt-BR")} • ${data.count || 0} lead(s).`;
+            } catch (error) {
+                el.status.innerHTML = '<span class="danger">Erro ao carregar leads. Verifique se o servidor local esta ativo.</span>';
+            }
+        }
+
+        function exportCsv() {
+            const query = toQuery(getFilters());
+            window.open(`/api/leads.csv?${query}`, "_blank");
+        }
+
+        function resetFilters() {
+            el.q.value = "";
+            el.plano.value = "";
+            el.minElo.value = "1100";
+            el.limit.value = "100";
+            loadLeads();
+        }
+
+        el.btnBuscar.addEventListener("click", loadLeads);
+        el.btnCsv.addEventListener("click", exportCsv);
+        el.btnLimpar.addEventListener("click", resetFilters);
+
+        el.q.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") loadLeads();
+        });
+
+        loadLeads();
+    </script>
+</body>
+</html>

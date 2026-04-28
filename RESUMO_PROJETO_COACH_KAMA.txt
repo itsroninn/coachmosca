@@ -1,0 +1,22 @@
+📁 PROJETO: Coach Kama - Age of Mythology
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📍 ARQUIVOS CRIADOS:
+- index.html (site principal)
+- COMO_CONFIGURAR_PLANILHA.md (guia de integração)
+- exemplo_visualizacao_leads.html (painel de visualização)
+
+🔧 CONFIGURAÇÕES:
+- WhatsApp: Substituir "5511999999999" na linha ~388 do index.html
+- Planilha: Configurar webhook na linha ~340 do index.html
+
+💡 PRÓXIMOS PASSOS:
+1. Testar o formulário localmente
+2. Configurar webhook (webhook.site ou make.com)
+3. Conectar planilha Google Sheets
+4. Entregar para cliente
+
+📞 SUPORTE: Esta conversa é o registro completo do processo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Data: 23/04/2026

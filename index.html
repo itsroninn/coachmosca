@@ -1,0 +1,2829 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach do Mosca | Age of Mythology</title>
+    <meta
+        name="description"
+        content="Coach do Mosca: coaching premium de Age of Mythology para jogadores 1100+ com aulas individuais, vagas limitadas e acompanhamento via Discord."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-night: #090f18;
+            --bg-deep: #101826;
+            --bg-stone: #1b2430;
+            --panel: rgba(15, 24, 38, 0.9);
+            --panel-soft: rgba(255, 255, 255, 0.05);
+            --panel-strong: rgba(255, 255, 255, 0.08);
+            --text-main: #f6f0e6;
+            --text-soft: #b8bec9;
+            --gold: #d6b46c;
+            --gold-bright: #f1d28c;
+            --royal-blue: #4f77b9;
+            --war-red: #b5453c;
+            --stone: #7f8893;
+            --line: rgba(214, 180, 108, 0.18);
+            --success: #61b490;
+            --danger: #d06b63;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.38);
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --max-width: 1180px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text-main);
+            font-family: "Rajdhani", "Segoe UI", sans-serif;
+            background:
+                linear-gradient(180deg, rgba(79, 119, 185, 0.1), transparent 22%),
+                radial-gradient(circle at top right, rgba(181, 69, 60, 0.14), transparent 28%),
+                linear-gradient(180deg, var(--bg-night) 0%, var(--bg-deep) 55%, #0b121d 100%);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        p {
+            margin-top: 0;
+        }
+
+        .container {
+            width: min(calc(100% - 32px), var(--max-width));
+            margin: 0 auto;
+        }
+
+        .display,
+        .section-title,
+        .brand,
+        .price {
+            font-family: "Cinzel", Georgia, serif;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            backdrop-filter: blur(16px);
+            background: rgba(9, 15, 24, 0.88);
+            border-bottom: 1px solid rgba(214, 180, 108, 0.12);
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            min-height: 78px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: #091018;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            box-shadow: 0 10px 28px rgba(214, 180, 108, 0.32);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: var(--text-soft);
+            font-size: 1.02rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            padding: 0 26px;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            font-family: "Rajdhani", sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: -45%;
+            bottom: -45%;
+            left: -80%;
+            width: 44%;
+            background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.15) 28%, rgba(255, 255, 255, 0.78) 50%, rgba(255, 232, 170, 0.32) 68%, transparent 100%);
+            transform: translateX(0) skewX(-22deg);
+            opacity: 0;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:hover::after {
+            animation: buttonFlash 520ms ease-out forwards;
+        }
+
+        .btn-primary {
+            color: #120c03;
+            text-shadow: 0 1px 0 rgba(255, 245, 205, 0.42);
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            box-shadow: 0 14px 34px rgba(214, 180, 108, 0.26);
+        }
+
+        .btn-secondary {
+            color: var(--text-main);
+            background: rgba(79, 119, 185, 0.12);
+            border-color: rgba(79, 119, 185, 0.35);
+        }
+
+        .btn-danger {
+            color: #f9efea;
+            background: rgba(181, 69, 60, 0.16);
+            border-color: rgba(181, 69, 60, 0.4);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 8px 14px;
+            border: 1px solid rgba(214, 180, 108, 0.24);
+            border-radius: 999px;
+            color: var(--gold-bright);
+            background: rgba(214, 180, 108, 0.08);
+            font-size: 0.84rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            padding: 76px 0 40px;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .hero-copy {
+            padding: 20px 0;
+        }
+
+        .display {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 18px;
+            font-size: clamp(3rem, 6vw, 5.8rem);
+            line-height: 0.94;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow:
+                0 2px 0 rgba(214, 180, 108, 0.14),
+                0 0 16px rgba(79, 119, 185, 0.2),
+                0 12px 40px rgba(0, 0, 0, 0.34);
+            user-select: none;
+            isolation: isolate;
+        }
+
+        .display-letter {
+            position: relative;
+            display: inline-block;
+            color: #ffffff;
+            transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease, filter 0.2s ease;
+            will-change: transform, filter;
+        }
+
+        .display-letter.is-space {
+            width: 0.35em;
+        }
+
+        .display-word {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .display-letter:hover {
+            color: #ffffff;
+            transform: translateY(-2px) scale(1.05);
+            text-shadow:
+                0 0 9px rgba(86, 146, 255, 0.85),
+                0 0 18px rgba(86, 146, 255, 0.52),
+                0 0 30px rgba(214, 180, 108, 0.32);
+            filter: brightness(1.08);
+        }
+
+        .title-particles {
+            position: absolute;
+            inset: -16px;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .title-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            opacity: 0;
+            mix-blend-mode: screen;
+            animation: letterParticle 760ms cubic-bezier(0.2, 0.74, 0.28, 1) forwards;
+        }
+
+        .hero-copy p {
+            max-width: 60ch;
+            color: var(--text-soft);
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .meta-pill {
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-soft);
+        }
+
+        .hero-visual {
+            position: relative;
+            overflow: hidden;
+            min-height: 520px;
+            padding: 30px;
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            background:
+                linear-gradient(180deg, rgba(79, 119, 185, 0.14), rgba(9, 15, 24, 0.74)),
+                linear-gradient(160deg, rgba(181, 69, 60, 0.14), transparent 45%),
+                linear-gradient(135deg, rgba(214, 180, 108, 0.1), rgba(255, 255, 255, 0.03));
+            box-shadow: var(--shadow);
+        }
+
+        .hero-visual::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(transparent 88%, rgba(214, 180, 108, 0.08) 88%),
+                linear-gradient(90deg, transparent 88%, rgba(79, 119, 185, 0.08) 88%);
+            background-size: 100% 42px, 42px 100%;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .visual-frame {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 18px;
+        }
+
+        .hero-crest {
+            justify-self: start;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(214, 180, 108, 0.26);
+            background: rgba(9, 15, 24, 0.42);
+            color: var(--gold-bright);
+            font-family: "Cinzel", serif;
+            text-transform: uppercase;
+        }
+
+        .visual-core {
+            display: grid;
+            align-content: center;
+            gap: 16px;
+        }
+
+        .visual-core strong {
+            max-width: 10ch;
+            font-family: "Cinzel", serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            line-height: 1.02;
+            text-transform: uppercase;
+        }
+
+        .visual-core p,
+        .hero-visual-footer {
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 42px 0;
+        }
+
+        .section-header {
+            max-width: 72ch;
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            margin-bottom: 12px;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.03;
+            text-transform: uppercase;
+        }
+
+        .section-header p {
+            color: var(--text-soft);
+            font-size: 1.08rem;
+            line-height: 1.6;
+        }
+
+        .card-grid {
+            display: grid;
+            gap: 22px;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+                var(--panel);
+            box-shadow: var(--shadow);
+        }
+
+        .identity-grid {
+            grid-template-columns: 0.95fr 1.05fr;
+        }
+
+        .identity-panel,
+        .palette-panel,
+        .system-panel,
+        .offer-panel,
+        .rules-panel,
+        .testimonial-panel,
+        .schedule-panel,
+        .form-panel {
+            padding: 28px;
+        }
+
+        .identity-copy p,
+        .system-panel p,
+        .offer-panel p,
+        .rules-panel p,
+        .schedule-panel p,
+        .testimonial-panel p {
+            color: var(--text-soft);
+            line-height: 1.65;
+        }
+
+        .highlight-list,
+        .rules-list,
+        .reference-list {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .highlight-list li,
+        .rules-list li,
+        .reference-list li {
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-soft);
+        }
+
+        .swatch-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .swatch {
+            min-height: 120px;
+            padding: 18px;
+            border-radius: var(--radius-md);
+            display: grid;
+            align-content: end;
+            gap: 8px;
+            color: #fdf9f1;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .swatch strong {
+            font-size: 1rem;
+        }
+
+        .swatch span {
+            font-size: 0.92rem;
+            opacity: 0.92;
+        }
+
+        .swatch-gold { background: linear-gradient(160deg, #f1d28c, #b88a3d); color: #1a1205; }
+        .swatch-blue { background: linear-gradient(160deg, #6c95da, #2e4f88); }
+        .swatch-red { background: linear-gradient(160deg, #cf6a62, #8f2c27); }
+        .swatch-stone { background: linear-gradient(160deg, #9ca3ab, #535c67); }
+
+        .system-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .system-panel h3,
+        .offer-panel h3,
+        .testimonial-panel h3,
+        .schedule-panel h3,
+        .form-panel h3 {
+            margin-bottom: 10px;
+            font-size: 1.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .ui-chip-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .ui-chip {
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 0.98rem;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .pricing-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .offer-panel.featured {
+            background:
+                linear-gradient(180deg, rgba(214, 180, 108, 0.12), rgba(255, 255, 255, 0.02)),
+                var(--panel);
+        }
+
+        .offer-tag {
+            display: inline-flex;
+            margin-bottom: 14px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(214, 180, 108, 0.1);
+            color: var(--gold-bright);
+            font-size: 0.84rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .price {
+            margin-bottom: 8px;
+            font-size: 2.5rem;
+            line-height: 1;
+            color: var(--gold-bright);
+        }
+
+        .offer-note {
+            margin-bottom: 18px;
+            color: var(--text-soft);
+            font-size: 1rem;
+        }
+
+        .offer-list {
+            display: grid;
+            gap: 10px;
+            margin: 0 0 24px;
+            padding-left: 18px;
+            color: var(--text-soft);
+        }
+
+        .notice-band {
+            padding: 20px 22px;
+            border: 1px solid rgba(181, 69, 60, 0.26);
+            border-radius: var(--radius-md);
+            background: rgba(181, 69, 60, 0.08);
+            color: #f4d4cf;
+            font-size: 1.06rem;
+        }
+
+        .rules-grid {
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        .testimonial-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .testimonial-panel strong {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--gold-bright);
+            font-family: "Cinzel", serif;
+            font-size: 1.05rem;
+        }
+
+        .testimonial-panel small {
+            color: var(--stone);
+        }
+
+        .contact-grid {
+            grid-template-columns: 0.95fr 1.05fr;
+        }
+
+        .form-panel form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .field label {
+            color: var(--text-soft);
+            font-size: 0.98rem;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 14px 16px;
+            color: var(--text-main);
+            font: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: rgba(214, 180, 108, 0.4);
+            box-shadow: 0 0 0 4px rgba(214, 180, 108, 0.08);
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: rgba(255, 255, 255, 0.34);
+        }
+
+        .community-section {
+            padding: 26px 0 10px;
+        }
+
+        .community-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+                var(--panel);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .community-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .mosca-logo {
+            width: 88px;
+            height: 88px;
+            border-radius: 16px;
+            border: 1px solid rgba(214, 180, 108, 0.35);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .community-card h3 {
+            margin: 0;
+            font-family: "Cinzel", serif;
+            font-size: 1.28rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .community-card p {
+            color: var(--text-soft);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .community-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 54px;
+            padding: 0 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            font-weight: 600;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .community-link:hover {
+            transform: translateY(-2px);
+            border-color: rgba(214, 180, 108, 0.48);
+            background: rgba(214, 180, 108, 0.08);
+        }
+
+        .community-link.disabled {
+            cursor: not-allowed;
+            opacity: 0.58;
+        }
+
+        .community-link.disabled:hover {
+            transform: none;
+            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .community-link img {
+            width: 20px;
+            height: 20px;
+            flex: 0 0 auto;
+            object-fit: contain;
+        }
+
+        .brand-mark img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .status,
+        .loading,
+        .success-message,
+        .error-message {
+            display: none;
+            padding: 16px 18px;
+            border-radius: 14px;
+        }
+
+        .loading {
+            background: rgba(79, 119, 185, 0.1);
+            color: #c8d7f5;
+        }
+
+        .success-message {
+            background: rgba(97, 180, 144, 0.14);
+            color: #d1f0e0;
+            border: 1px solid rgba(97, 180, 144, 0.24);
+        }
+
+        .error-message {
+            background: rgba(208, 107, 99, 0.14);
+            color: #ffd7d2;
+            border: 1px solid rgba(208, 107, 99, 0.24);
+        }
+
+        .site-footer {
+            padding: 44px 0 64px;
+            border-top: 1px solid rgba(214, 180, 108, 0.12);
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .footer-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr 0.9fr;
+            gap: 24px;
+        }
+
+        .footer-layout p,
+        .footer-layout a {
+            color: var(--text-soft);
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            display: grid;
+            gap: 4px;
+        }
+
+        .footer-note {
+            margin-top: 26px;
+            color: rgba(255, 255, 255, 0.34);
+        }
+
+        @keyframes letterParticle {
+            0% {
+                transform: translate(-50%, -50%) scale(0.45);
+                opacity: 0;
+            }
+            14% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(0.1);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 1080px) {
+            .hero-layout,
+            .identity-grid,
+            .system-grid,
+            .pricing-grid,
+            .rules-grid,
+            .testimonial-grid,
+            .contact-grid,
+            .footer-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .site-header {
+                position: static;
+            }
+
+            .nav-wrap {
+                padding: 18px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 10px;
+            }
+
+            .hero {
+                padding-top: 36px;
+            }
+
+            .display {
+                font-size: clamp(2.05rem, 10vw, 3.2rem);
+                line-height: 1.02;
+            }
+
+            .hero-copy p {
+                font-size: 1rem;
+            }
+
+            .hero-actions {
+                gap: 10px;
+            }
+
+            .hero-actions .btn {
+                min-height: 46px;
+                padding: 0 18px;
+                font-size: 0.9rem;
+            }
+
+            .hero-visual {
+                min-height: 360px;
+            }
+
+            .identity-panel,
+            .palette-panel,
+            .system-panel,
+            .offer-panel,
+            .rules-panel,
+            .testimonial-panel,
+            .schedule-panel,
+            .form-panel {
+                padding: 22px;
+            }
+
+            .swatch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .display-letter,
+            .title-particle {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Premium redesign layer */
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 14% 8%, rgba(214, 180, 108, 0.16), transparent 26%),
+                radial-gradient(circle at 82% 4%, rgba(79, 119, 185, 0.22), transparent 30%),
+                linear-gradient(180deg, #070b12 0%, #101720 48%, #080c12 100%);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 72%);
+        }
+
+        .site-header {
+            background: rgba(7, 11, 18, 0.76);
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+        }
+
+        .nav-wrap {
+            min-height: 72px;
+        }
+
+        .brand {
+            font-size: 0.98rem;
+            letter-spacing: 0.08em;
+        }
+
+        .brand-mark {
+            border: 1px solid rgba(214, 180, 108, 0.44);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
+        }
+
+        .nav-links a:not(.btn) {
+            position: relative;
+            font-weight: 600;
+        }
+
+        .nav-links a:not(.btn)::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -8px;
+            height: 1px;
+            transform: scaleX(0);
+            transform-origin: center;
+            background: var(--gold-bright);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-links a:not(.btn):hover::after {
+            transform: scaleX(1);
+        }
+
+        .btn {
+            min-height: 50px;
+            border-radius: 14px;
+            letter-spacing: 0.08em;
+            color: inherit;
+        }
+
+        .btn-primary {
+            color: #120c03;
+            text-shadow: 0 1px 0 rgba(255, 245, 205, 0.42);
+            background:
+                linear-gradient(135deg, #fff0b7 0%, #d6b46c 48%, #a8752f 100%);
+            box-shadow: 0 18px 38px rgba(214, 180, 108, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.48);
+        }
+
+        .nav-links .btn-primary {
+            color: #120c03;
+            font-weight: 800;
+        }
+
+        .nav-links .btn-primary::after {
+            opacity: 0;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.055);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .hero {
+            position: relative;
+            min-height: min(760px, calc(100vh - 72px));
+            padding: 112px 0 72px;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -3;
+            background-image: url("IMAGENS/AOM%20STANDARDjpg.jpg");
+            background-size: cover;
+            background-position: center 38%;
+            opacity: 0.34;
+            filter: saturate(0.78) contrast(1.04) brightness(0.78);
+            transform: scale(1.03);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(7, 11, 18, 0.96) 0%, rgba(8, 13, 20, 0.86) 38%, rgba(8, 13, 20, 0.52) 68%, rgba(8, 13, 20, 0.76) 100%),
+                linear-gradient(180deg, rgba(7, 11, 18, 0.56) 0%, rgba(7, 11, 18, 0.2) 46%, #080c12 100%);
+        }
+
+        .hero-fade {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            z-index: 0;
+            height: 220px;
+            pointer-events: none;
+            background:
+                linear-gradient(180deg, rgba(8, 12, 18, 0) 0%, rgba(9, 14, 21, 0.72) 48%, #101720 100%);
+        }
+
+        .cursor-aura {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
+            background:
+                radial-gradient(circle 260px at var(--mouse-x, 50%) var(--mouse-y, 28%), rgba(79, 119, 185, 0.16), transparent 70%);
+            mix-blend-mode: screen;
+        }
+
+        .scroll-storm {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            height: var(--storm-height, 3600px);
+            pointer-events: none;
+            opacity: 0.9;
+            overflow: hidden;
+        }
+
+        .scroll-storm svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .storm-main,
+        .storm-branch {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .storm-main {
+            stroke: url(#stormGradient);
+            stroke-width: 3.4;
+            filter: drop-shadow(0 0 10px rgba(105, 176, 255, 0.72)) drop-shadow(0 0 18px rgba(214, 180, 108, 0.34));
+        }
+
+        .storm-main-glow {
+            fill: none;
+            stroke: rgba(104, 177, 255, 0.18);
+            stroke-width: 14;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+            filter: blur(8px);
+        }
+
+        .storm-branch {
+            stroke: rgba(241, 210, 140, 0.78);
+            stroke-width: 2.1;
+            opacity: 0;
+            filter: drop-shadow(0 0 8px rgba(241, 210, 140, 0.6));
+            transition: opacity 0.18s ease;
+        }
+
+        .storm-branch.is-live {
+            opacity: var(--branch-opacity, 0.82);
+            animation: branchFlicker 1.8s ease-in-out infinite alternate;
+        }
+
+        .storm-fog {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: var(--storm-fog-top, 72%);
+            height: 560px;
+            opacity: var(--storm-fog-opacity, 0);
+            background:
+                radial-gradient(circle at 50% 38%, rgba(214, 180, 108, 0.18), transparent 34%),
+                radial-gradient(circle at 44% 44%, rgba(104, 177, 255, 0.16), transparent 42%),
+                radial-gradient(circle at 58% 52%, rgba(255, 255, 255, 0.1), transparent 36%),
+                linear-gradient(180deg, transparent 0%, rgba(16, 23, 32, 0.5) 42%, transparent 100%);
+            filter: blur(18px);
+            transform: translateY(calc((1 - var(--storm-fog-opacity, 0)) * 70px));
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .site-header,
+        main,
+        .site-footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-effects {
+            position: absolute;
+            inset: 72px 0 0;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.92;
+        }
+
+        .hero-effects::before,
+        .hero-effects::after,
+        .hero-effects .mythic-radar,
+        .hero-effects .data-panel,
+        .hero-effects .data-dot {
+            pointer-events: none;
+        }
+
+        .hero-effects::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -12%;
+            width: 58%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(95, 158, 235, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(95, 158, 235, 0.2) 1px, transparent 1px);
+            background-size: 26px 26px;
+            mask-image: linear-gradient(90deg, transparent 0%, #000 25%, #000 76%, transparent 100%);
+            transform: perspective(760px) rotateY(-18deg) skewY(-2deg);
+            animation: gridBreathe 8s ease-in-out infinite alternate;
+        }
+
+        .hero-effects::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(115deg, transparent 0%, transparent 42%, rgba(214, 180, 108, 0.16) 48%, rgba(111, 169, 255, 0.24) 50%, transparent 56%, transparent 100%);
+            transform: translateX(-120%);
+            animation: cinematicSweep 7s ease-in-out infinite;
+        }
+
+        .data-dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 999px;
+            background: rgba(104, 177, 255, 0.78);
+            box-shadow: 0 0 16px rgba(104, 177, 255, 0.9);
+            opacity: 0;
+            animation: dataFloat var(--duration, 6s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        .data-dot:nth-child(3n) {
+            background: rgba(241, 210, 140, 0.82);
+            box-shadow: 0 0 14px rgba(241, 210, 140, 0.72);
+        }
+
+        .data-panel {
+            position: absolute;
+            right: var(--right, 8%);
+            top: var(--top, 18%);
+            min-width: 120px;
+            padding: 8px 12px;
+            border: 1px solid rgba(104, 177, 255, 0.24);
+            border-radius: 10px;
+            color: rgba(232, 242, 255, 0.74);
+            background: rgba(5, 12, 22, 0.42);
+            backdrop-filter: blur(10px);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            animation: panelDrift var(--duration, 9s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        .mythic-radar {
+            position: absolute;
+            right: 9%;
+            top: 22%;
+            width: min(360px, 32vw);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            opacity: 0.58;
+            background:
+                radial-gradient(circle at 50% 50%, rgba(104, 177, 255, 0.2), transparent 42%),
+                radial-gradient(circle, rgba(241, 210, 140, 0.62) 1.3px, transparent 1.7px);
+            background-size: auto, 14px 14px;
+            mask-image: radial-gradient(circle, #000 0 58%, transparent 70%);
+            filter: drop-shadow(0 0 22px rgba(104, 177, 255, 0.2));
+            animation: radarFloat 9s ease-in-out infinite alternate;
+        }
+
+        .mythic-radar::before,
+        .mythic-radar::after {
+            content: "";
+            position: absolute;
+            inset: 9%;
+            border-radius: 50%;
+            border: 1px solid rgba(104, 177, 255, 0.22);
+        }
+
+        .mythic-radar::after {
+            inset: 24%;
+            border-color: rgba(241, 210, 140, 0.2);
+            animation: radarPulse 3.8s ease-in-out infinite;
+        }
+
+        .radar-tag {
+            position: absolute;
+            pointer-events: auto;
+            min-width: 112px;
+            padding: 8px 12px;
+            border: 1px solid rgba(241, 210, 140, 0.26);
+            border-radius: 12px;
+            background: rgba(7, 13, 22, 0.52);
+            color: rgba(247, 235, 202, 0.82);
+            backdrop-filter: blur(10px);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 0 22px rgba(104, 177, 255, 0.08);
+            animation: radarTagFloat var(--duration, 7s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+            transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+        }
+
+        .radar-tag:hover {
+            opacity: 1;
+            color: #fff0bd;
+            border-color: rgba(241, 210, 140, 0.84);
+            background: rgba(19, 24, 30, 0.78);
+            box-shadow:
+                0 0 0 1px rgba(241, 210, 140, 0.16),
+                0 0 26px rgba(241, 210, 140, 0.28),
+                0 0 42px rgba(104, 177, 255, 0.16);
+            transform: translateY(-4px) scale(1.06);
+        }
+
+        .hero-layout {
+            display: block;
+        }
+
+        .hero-copy {
+            max-width: 880px;
+        }
+
+        .eyebrow {
+            border-color: rgba(214, 180, 108, 0.34);
+            background: rgba(214, 180, 108, 0.095);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .display {
+            max-width: none;
+            margin-bottom: 22px;
+            font-size: clamp(3.15rem, 6.1vw, 6.2rem);
+            line-height: 0.9;
+            letter-spacing: 0;
+            white-space: nowrap;
+            text-shadow:
+                0 0 14px rgba(118, 180, 255, 0.22),
+                0 0 34px rgba(79, 119, 185, 0.22),
+                0 15px 44px rgba(0, 0, 0, 0.54);
+            animation: titlePulse 5s ease-in-out infinite;
+        }
+
+        .hero-copy p {
+            max-width: 62ch;
+            color: #d8dde6;
+            font-size: 1.24rem;
+        }
+
+        .hero-actions {
+            margin-top: 32px;
+        }
+
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            max-width: 720px;
+        }
+
+        .meta-pill {
+            min-height: 74px;
+            display: grid;
+            align-content: center;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.052);
+            border-color: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-visual {
+            display: none;
+        }
+
+        section {
+            padding: 58px 0;
+        }
+
+        #oferta {
+            margin-top: -1px;
+            background: linear-gradient(180deg, #101720 0%, rgba(16, 23, 32, 0) 260px);
+        }
+
+        #lead-form {
+            position: relative;
+            overflow: visible;
+        }
+
+        #lead-form::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -260px;
+            z-index: 0;
+            width: min(1180px, 138vw);
+            height: 760px;
+            transform: translateX(-50%);
+            pointer-events: none;
+            opacity: 0.72;
+            background:
+                radial-gradient(ellipse at 50% 42%, rgba(241, 210, 140, 0.18), transparent 34%),
+                radial-gradient(ellipse at 46% 48%, rgba(104, 177, 255, 0.2), transparent 46%),
+                radial-gradient(ellipse at 58% 54%, rgba(255, 255, 255, 0.1), transparent 44%),
+                linear-gradient(180deg, transparent 0%, rgba(16, 23, 32, 0.12) 22%, rgba(16, 23, 32, 0.22) 52%, transparent 100%);
+            filter: blur(30px);
+            mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 78%, transparent 100%);
+        }
+
+        #lead-form .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            max-width: 820px;
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: clamp(2.15rem, 4.6vw, 4rem);
+            letter-spacing: 0;
+        }
+
+        .section-header p,
+        .rules-panel p,
+        .schedule-panel p,
+        .testimonial-panel p,
+        .community-card p,
+        .footer-layout p {
+            color: #c5ccd8;
+        }
+
+        .card,
+        .community-card {
+            border-color: rgba(255, 255, 255, 0.1);
+            border-radius: 22px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.028)),
+                rgba(11, 17, 26, 0.82);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+        }
+
+        .offer-panel {
+            position: relative;
+            overflow: hidden;
+            min-height: 100%;
+        }
+
+        .offer-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(214, 180, 108, 0.12), transparent 36%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .offer-panel:hover::before,
+        .offer-panel.featured::before {
+            opacity: 1;
+        }
+
+        .offer-panel.featured {
+            border-color: rgba(214, 180, 108, 0.52);
+            transform: translateY(-10px);
+            box-shadow: 0 32px 92px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(214, 180, 108, 0.16);
+        }
+
+        .offer-tag {
+            border: 1px solid rgba(214, 180, 108, 0.22);
+            background: rgba(214, 180, 108, 0.12);
+        }
+
+        .price {
+            font-size: 3rem;
+        }
+
+        .offer-list {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .offer-list li,
+        .rules-list li {
+            position: relative;
+            padding-left: 38px;
+        }
+
+        .offer-list li::before,
+        .rules-list li::before {
+            content: "";
+            position: absolute;
+            left: 14px;
+            top: 1.05em;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--gold-bright);
+            box-shadow: 0 0 14px rgba(214, 180, 108, 0.64);
+        }
+
+        .notice-band {
+            border-color: rgba(214, 180, 108, 0.3);
+            background:
+                linear-gradient(90deg, rgba(214, 180, 108, 0.13), rgba(79, 119, 185, 0.08)),
+                rgba(255, 255, 255, 0.035);
+            color: #f8e9c4;
+        }
+
+        .rules-grid {
+            align-items: stretch;
+        }
+
+        .testimonial-panel {
+            min-height: 220px;
+            border-color: rgba(214, 180, 108, 0.28);
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.34),
+                inset 0 1px 0 rgba(255, 224, 157, 0.08);
+            transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+        }
+
+        .testimonial-panel:hover {
+            transform: translateY(-8px);
+            border-color: rgba(241, 210, 140, 0.78);
+            background:
+                linear-gradient(180deg, rgba(214, 180, 108, 0.12), rgba(255, 255, 255, 0.035)),
+                rgba(11, 17, 26, 0.9);
+            box-shadow:
+                0 34px 90px rgba(0, 0, 0, 0.46),
+                0 0 0 1px rgba(241, 210, 140, 0.16),
+                0 0 38px rgba(214, 180, 108, 0.16),
+                inset 0 1px 0 rgba(255, 235, 185, 0.18);
+        }
+
+        .testimonial-panel:hover strong {
+            color: #ffe7a8;
+            text-shadow: 0 0 18px rgba(214, 180, 108, 0.38);
+        }
+
+        .form-panel {
+            border-color: rgba(214, 180, 108, 0.28);
+        }
+
+        .field label {
+            color: #dce3ee;
+            font-weight: 700;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            border-radius: 12px;
+            background: rgba(2, 6, 12, 0.48);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .community-card {
+            display: grid;
+            grid-template-columns: 0.75fr 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .community-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .community-link {
+            justify-content: center;
+            min-height: 68px;
+            border-radius: 16px;
+        }
+
+        .language-widget {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 60;
+        }
+
+        .language-toggle {
+            min-height: 48px;
+            min-width: 76px;
+            padding: 0 16px;
+            border: 1px solid rgba(241, 210, 140, 0.5);
+            border-radius: 999px;
+            color: var(--gold-bright);
+            background: rgba(8, 12, 18, 0.82);
+            backdrop-filter: blur(14px);
+            font: 800 0.88rem "Rajdhani", sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34), 0 0 28px rgba(214, 180, 108, 0.1);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .language-toggle:hover,
+        .language-widget.is-open .language-toggle {
+            transform: translateY(-2px);
+            border-color: rgba(241, 210, 140, 0.9);
+            background: rgba(18, 20, 24, 0.92);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42), 0 0 34px rgba(214, 180, 108, 0.2);
+        }
+
+        .language-menu {
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + 10px);
+            width: 190px;
+            padding: 10px;
+            border: 1px solid rgba(241, 210, 140, 0.28);
+            border-radius: 18px;
+            background: rgba(8, 12, 18, 0.9);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.44);
+            opacity: 0;
+            transform: translateY(10px) scale(0.96);
+            transform-origin: bottom right;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .language-widget.is-open .language-menu {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .language-option {
+            width: 100%;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0 12px;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            color: #d8dde6;
+            background: transparent;
+            font: 700 0.95rem "Rajdhani", sans-serif;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+        }
+
+        .language-option:hover,
+        .language-option.is-active {
+            color: #fff0bd;
+            border-color: rgba(241, 210, 140, 0.34);
+            background: rgba(214, 180, 108, 0.1);
+        }
+
+        .language-option span:last-child {
+            color: rgba(241, 210, 140, 0.76);
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .site-footer {
+            background: rgba(3, 6, 10, 0.66);
+        }
+
+        @keyframes gridBreathe {
+            from {
+                opacity: 0.24;
+                transform: perspective(760px) rotateY(-18deg) skewY(-2deg) translateX(0);
+            }
+            to {
+                opacity: 0.42;
+                transform: perspective(760px) rotateY(-16deg) skewY(-2deg) translateX(-18px);
+            }
+        }
+
+        @keyframes cinematicSweep {
+            0%, 42% {
+                transform: translateX(-120%);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            64%, 100% {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes dataFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translate3d(0, 16px, 0) scale(0.72);
+            }
+            25%, 70% {
+                opacity: 0.95;
+            }
+            50% {
+                transform: translate3d(var(--shift-x, -18px), var(--shift-y, -42px), 0) scale(1);
+            }
+        }
+
+        @keyframes panelDrift {
+            0%, 100% {
+                opacity: 0.38;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0.82;
+                transform: translateY(-14px);
+            }
+        }
+
+        @keyframes titlePulse {
+            0%, 100% {
+                filter: brightness(1);
+                text-shadow:
+                    0 0 12px rgba(118, 180, 255, 0.18),
+                    0 0 30px rgba(79, 119, 185, 0.2),
+                    0 15px 44px rgba(0, 0, 0, 0.54);
+            }
+            50% {
+                filter: brightness(1.08);
+                text-shadow:
+                    0 0 18px rgba(118, 180, 255, 0.34),
+                    0 0 46px rgba(79, 119, 185, 0.28),
+                    0 15px 44px rgba(0, 0, 0, 0.54);
+            }
+        }
+
+        @keyframes buttonFlash {
+            0% {
+                left: -80%;
+                opacity: 0;
+            }
+            18% {
+                opacity: 1;
+            }
+            100% {
+                left: 135%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes branchFlicker {
+            0%, 100% {
+                filter: drop-shadow(0 0 7px rgba(241, 210, 140, 0.48));
+            }
+            42% {
+                filter: drop-shadow(0 0 13px rgba(105, 176, 255, 0.62)) drop-shadow(0 0 18px rgba(241, 210, 140, 0.28));
+            }
+            67% {
+                filter: drop-shadow(0 0 9px rgba(241, 210, 140, 0.74));
+            }
+        }
+
+        @keyframes radarFloat {
+            from {
+                transform: translate3d(0, 0, 0) rotate(-4deg);
+            }
+            to {
+                transform: translate3d(-18px, 14px, 0) rotate(4deg);
+            }
+        }
+
+        @keyframes radarPulse {
+            0%, 100% {
+                transform: scale(0.94);
+                opacity: 0.42;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 0.86;
+            }
+        }
+
+        @keyframes radarTagFloat {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 0.66;
+            }
+            50% {
+                transform: translateY(-12px);
+                opacity: 0.95;
+            }
+        }
+
+        @media (max-width: 1080px) {
+            .hero-layout {
+                display: block;
+            }
+
+            .community-card {
+                grid-template-columns: 1fr;
+            }
+
+            .community-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .site-header {
+                position: static;
+            }
+
+            .nav-wrap {
+                gap: 14px;
+            }
+
+            .nav-links .btn {
+                width: 100%;
+            }
+
+            .language-widget {
+                right: max(14px, env(safe-area-inset-right));
+                bottom: max(14px, env(safe-area-inset-bottom));
+            }
+
+            .language-toggle {
+                min-width: 68px;
+            }
+
+            .language-menu {
+                width: 190px;
+                max-width: calc(100dvw - 28px);
+                right: 0;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 64px 0 56px;
+            }
+
+            .display {
+                max-width: none;
+                font-size: clamp(2.1rem, 9.2vw, 3.6rem);
+                white-space: normal;
+                overflow-wrap: normal;
+                word-break: normal;
+            }
+
+            .hero-meta,
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-pill {
+                min-height: 58px;
+            }
+
+            .hero::before {
+                opacity: 0.28;
+                background-position: 58% center;
+            }
+
+            .hero-effects {
+                opacity: 0.54;
+            }
+
+            .hero-effects::before {
+                width: 90%;
+                right: -38%;
+            }
+
+            .mythic-radar,
+            .radar-tag {
+                display: none;
+            }
+
+            .scroll-storm {
+                opacity: 0.72;
+                z-index: 0;
+                width: 100vw;
+                max-width: 100vw;
+            }
+
+            .scroll-storm svg {
+                width: 360%;
+                left: -130%;
+            }
+
+            .hero-effects {
+                max-width: 100vw;
+            }
+
+            .storm-main {
+                stroke-width: 4.6;
+                filter: drop-shadow(0 0 12px rgba(105, 176, 255, 0.92)) drop-shadow(0 0 18px rgba(214, 180, 108, 0.48));
+            }
+
+            .storm-main-glow {
+                stroke-width: 18;
+                opacity: 0.48;
+            }
+
+            .storm-branch {
+                stroke-width: 2.8;
+            }
+
+            .offer-panel.featured {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-aura" aria-hidden="true"></div>
+    <div class="scroll-storm" aria-hidden="true">
+        <svg viewBox="0 0 1000 3200" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="stormGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#f1d28c"/>
+                    <stop offset="32%" stop-color="#76b4ff"/>
+                    <stop offset="64%" stop-color="#f1d28c"/>
+                    <stop offset="100%" stop-color="#e8edf8"/>
+                </linearGradient>
+            </defs>
+            <path class="storm-main-glow" d="M520 0 L500 210 L545 390 L486 610 L528 780 L474 1025 L518 1210 L492 1475 L536 1660 L482 1895 L512 2120 L488 2365 L532 2575 L504 2820 L500 3200"/>
+            <path class="storm-main" id="stormMainPath" d="M520 0 L500 210 L545 390 L486 610 L528 780 L474 1025 L518 1210 L492 1475 L536 1660 L482 1895 L512 2120 L488 2365 L532 2575 L504 2820 L500 3200"/>
+            <path class="storm-branch" data-branch-at="0.16" d="M545 390 L650 318 L740 330 L815 270"/>
+            <path class="storm-branch" data-branch-at="0.24" d="M486 610 L386 548 L284 572 L208 510"/>
+            <path class="storm-branch" data-branch-at="0.35" d="M474 1025 L618 950 L705 980 L830 905"/>
+            <path class="storm-branch" data-branch-at="0.46" d="M518 1210 L414 1298 L306 1270 L205 1360"/>
+            <path class="storm-branch" data-branch-at="0.58" d="M536 1660 L670 1584 L790 1620 L902 1534"/>
+            <path class="storm-branch" data-branch-at="0.7" d="M482 1895 L352 1980 L250 1948 L142 2028"/>
+            <path class="storm-branch" data-branch-at="0.82" d="M488 2365 L628 2282 L742 2318 L862 2238"/>
+            <path class="storm-branch" data-branch-at="0.91" d="M532 2575 L420 2662 L318 2638 L220 2728"/>
+        </svg>
+        <div class="storm-fog"></div>
+    </div>
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a class="brand" href="#inicio">
+                <span class="brand-mark">
+                    <img src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo Mosca">
+                </span>
+                <span>Coach do Mosca</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#inicio" data-i18n="nav.home">Início</a>
+                <a href="#planos" data-i18n="nav.plans">Planos</a>
+                <a href="#informacoes" data-i18n="nav.info">Informações</a>
+                <a href="#contato" data-i18n="nav.contact">Contato</a>
+                <a class="btn btn-primary" href="#lead-form" data-i18n="nav.cta">Entrar na fila</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="language-widget" id="languageWidget">
+        <div class="language-menu" id="languageMenu" aria-hidden="true">
+            <button class="language-option" type="button" data-lang-option="pt">
+                <span>Português</span>
+                <span>PT</span>
+            </button>
+            <button class="language-option" type="button" data-lang-option="en">
+                <span>English</span>
+                <span>EN</span>
+            </button>
+        </div>
+        <button class="language-toggle" type="button" id="languageToggle" aria-label="Mudar idioma" aria-expanded="false">
+            PT
+        </button>
+    </div>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-effects" aria-hidden="true">
+                <div class="mythic-radar"></div>
+                <span class="radar-tag" style="top: 26%; right: 28%; --duration: 8s;">Eco route</span>
+                <span class="radar-tag" style="top: 42%; right: 4%; --duration: 7s; --delay: -2s;">Pressure</span>
+                <span class="radar-tag" style="top: 62%; right: 24%; --duration: 9s; --delay: -4s;">Map read</span>
+                <span class="data-panel" style="--top: 18%; --right: 6%; --duration: 8s;">Build order</span>
+                <span class="data-panel" style="--top: 52%; --right: 10%; --duration: 10s; --delay: -3s;">Timing</span>
+                <span class="data-panel" style="--top: 36%; --right: 8%; --duration: 9s; --delay: -5s;">Scouting</span>
+            </div>
+            <div class="hero-fade" aria-hidden="true"></div>
+            <div class="container hero-layout">
+                <div class="hero-copy">
+                    <div class="eyebrow" data-i18n="hero.eyebrow">Age of Mythology • Coaching individual</div>
+                    <h1 class="display" id="heroTitle" aria-label="Coach do Mosca">Coach do Mosca</h1>
+                    <p data-i18n="hero.copy">
+                        Evolua com sessões individuais focadas em decisão, macro, matchups e leitura de jogo.
+                        Um acompanhamento direto para jogadores 1100+ que querem ter respostas rápidas
+                        e counterplays.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#planos" data-i18n="hero.primary">Ver planos</a>
+                        <a class="btn btn-secondary" href="#informacoes" data-i18n="hero.secondary">Como funciona</a>
+                    </div>
+
+                    <div class="hero-meta">
+                        <span class="meta-pill" data-i18n="hero.meta1">Requisito mínimo: 1100+</span>
+                        <span class="meta-pill" data-i18n="hero.meta2">Sessão individual via Discord</span>
+                        <span class="meta-pill" data-i18n="hero.meta3">Vagas limitadas</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="oferta">
+            <div class="container">
+                <div class="section-header">
+                    <div class="eyebrow" data-i18n="offer.eyebrow">Oferta</div>
+                    <h2 class="section-title" data-i18n="offer.title">Coaching para jogadores 1100+</h2>
+                    <p data-i18n="offer.copy">
+                        Escolha entre uma sessão pontual ou pacotes pensados para acompanhar sua evolução
+                        com mais profundidade ao longo das semanas.
+                    </p>
+                </div>
+
+                <div class="notice-band" data-i18n="offer.notice">
+                    Vagas limitadas. O coaching é destinado a jogadores com elo mínimo de 1100+.
+                </div>
+
+                <div class="card-grid pricing-grid" id="planos" style="margin-top: 22px;">
+                    <article class="card offer-panel">
+                        <div class="offer-tag" data-i18n="plan.single.tag">Avulso</div>
+                        <h3 data-i18n="plan.single.title">1 hora</h3>
+                        <div class="price">R$ 100</div>
+                        <div class="offer-note" data-i18n="plan.single.note">Entrada direta para quem quer uma sessão pontual.</div>
+                        <ul class="offer-list">
+                            <li data-i18n="plan.single.item1">1 sessão individual de 1 hora</li>
+                            <li data-i18n="plan.single.item2">Análise específica do seu momento</li>
+                            <li data-i18n="plan.single.item3">Ideal para dúvida, ajuste ou direcionamento rápido</li>
+                        </ul>
+                        <a class="btn btn-secondary" href="#lead-form" data-i18n="plan.single.cta">Quero esse</a>
+                    </article>
+
+                    <article class="card offer-panel featured">
+                        <div class="offer-tag" data-i18n="plan.mid.tag">Mais escolhido</div>
+                        <h3 data-i18n="plan.mid.title">6 horas</h3>
+                        <div class="price">R$ 425</div>
+                        <div class="offer-note" data-i18n="plan.mid.note">Melhor ponto de entrada para evolução consistente.</div>
+                        <ul class="offer-list">
+                            <li data-i18n="plan.mid.item1">6 sessões individuais de 1 hora</li>
+                            <li data-i18n="plan.mid.item2">Validade de 60 dias</li>
+                            <li data-i18n="plan.mid.item3">Espaço suficiente para correção e acompanhamento</li>
+                        </ul>
+                        <a class="btn btn-primary" href="#lead-form" data-i18n="plan.mid.cta">Tenho interesse</a>
+                    </article>
+
+                    <article class="card offer-panel">
+                        <div class="offer-tag" data-i18n="plan.full.tag">Intensivo</div>
+                        <h3 data-i18n="plan.full.title">12 horas</h3>
+                        <div class="price">R$ 700</div>
+                        <div class="offer-note" data-i18n="plan.full.note">Opção mais forte para quem quer profundidade e ritmo.</div>
+                        <ul class="offer-list">
+                            <li data-i18n="plan.full.item1">12 sessões individuais de 1 hora</li>
+                            <li data-i18n="plan.full.item2">Validade de 120 dias</li>
+                            <li data-i18n="plan.full.item3">Pacote pensado para evolução mais completa</li>
+                        </ul>
+                        <a class="btn btn-secondary" href="#lead-form" data-i18n="plan.full.cta">Entrar na fila</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="informacoes">
+            <div class="container">
+                <div class="section-header">
+                    <div class="eyebrow" data-i18n="info.eyebrow">Informações ao comprador</div>
+                    <h2 class="section-title" data-i18n="info.title">Regras, formato e condições</h2>
+                    <p data-i18n="info.copy">
+                        Tudo o que você precisa saber antes de entrar na fila: formato, horários,
+                        validade dos pacotes, pagamento e remarcações.
+                    </p>
+                </div>
+
+                <div class="card-grid rules-grid">
+                    <article class="card rules-panel">
+                        <h3 data-i18n="info.rules.title">Como funciona</h3>
+                        <ul class="rules-list">
+                            <li data-i18n="info.rules.item1">O coaching é individual e acontece via Discord, no canal de voz "Sessão Particular" no servidor "Mosca Discord".</li>
+                            <li data-i18n="info.rules.item2">As sessões são de 1 hora cada e devem ser agendadas previamente. Faltas não serão descontadas.</li>
+                            <li data-i18n="info.rules.item3">Remarcar uma sessão é possível com 12 horas de antecedência.</li>
+                            <li data-i18n="info.rules.item4">Pagamento adiantado via PIX ou PayPal. No PayPal, o valor é ajustado por causa das taxas.</li>
+                            <li data-i18n="info.rules.item5">Não há reembolso.</li>
+                            <li data-i18n="info.rules.item6">O pacote de 12 horas possui validade de 120 dias. O pacote de 6 horas possui validade de 60 dias.</li>
+                        </ul>
+                    </article>
+
+                    <article class="card schedule-panel">
+                        <h3 data-i18n="info.schedule.title">Horários disponíveis</h3>
+                        <p data-i18n="info.schedule.copy1">
+                            Durante a semana, os horários ficam majoritariamente concentrados no período da noite,
+                            a partir das 17h no horário de Brasília, equivalente a 20 GMT.
+                        </p>
+                        <p data-i18n="info.schedule.copy2">
+                            Nos fins de semana, os horários são variados e combinados diretamente com o aluno conforme disponibilidade.
+                        </p>
+                        <div class="ui-chip-row">
+                            <span class="ui-chip" data-i18n="info.schedule.chip1">Semana: após 17h Brasília</span>
+                            <span class="ui-chip" data-i18n="info.schedule.chip2">Referência: 20 GMT</span>
+                            <span class="ui-chip" data-i18n="info.schedule.chip3">Fim de semana: a combinar</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <div class="eyebrow" data-i18n="method.eyebrow">Método</div>
+                    <h2 class="section-title" data-i18n="method.title">Aula com foco no que muda seu jogo</h2>
+                    <p data-i18n="method.copy">
+                        A experiência foi organizada para passar confiança rapidamente: clareza de plano,
+                        acompanhamento individual e uma jornada simples até o contato.
+                    </p>
+                </div>
+
+                <div class="card-grid testimonial-grid">
+                    <article class="card testimonial-panel">
+                        <strong data-i18n="method.card1.title">Diagnóstico claro</strong>
+                        <p data-i18n="method.card1.copy">
+                            Identificação dos padrões que mais custam partidas: decisões atrasadas, economia sem plano e lutas mal escolhidas.
+                        </p>
+                        <small data-i18n="method.card1.small">Ideal para sair do piloto automático</small>
+                    </article>
+
+                    <article class="card testimonial-panel">
+                        <strong data-i18n="method.card2.title">Plano de evolução</strong>
+                        <p data-i18n="method.card2.copy">
+                            Cada sessão fecha com prioridades práticas para aplicar nas próximas partidas e revisar no acompanhamento.
+                        </p>
+                        <small data-i18n="method.card2.small">Menos teoria solta, mais execução</small>
+                    </article>
+
+                    <article class="card testimonial-panel">
+                        <strong data-i18n="method.card3.title">Leitura competitiva</strong>
+                        <p data-i18n="method.card3.copy">
+                            Ajustes em matchups, timing, scouting e tomada de decisão para jogar com mais consistência contra oponentes fortes.
+                        </p>
+                        <small data-i18n="method.card3.small">Foco em Age of Mythology</small>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="lead-form">
+            <div class="container card-grid contact-grid">
+                <article class="card rules-panel" id="contato">
+                    <div class="eyebrow" data-i18n="contact.eyebrow">Contato</div>
+                    <h2 class="section-title" data-i18n="contact.title">Quero evoluir no AOM com o mosca</h2>
+                    <p data-i18n="contact.copy">
+                        Preencha os dados para registrar seu perfil. Vamos criar o melhor plano
+                        com base em seu estilo e elo.
+                    </p>
+                    <ul class="rules-list">
+                        <li data-i18n="contact.item1">Atendimento individual conforme disponibilidade do coach.</li>
+                        <li data-i18n="contact.item2">Contato feito pelo WhatsApp informado no formulário. Discord disponível</li>
+                        <li data-i18n="contact.item3">O formulário salva os dados no servidor local e mantém backup no navegador.</li>
+                    </ul>
+                </article>
+
+                <article class="card form-panel">
+                    <h3 data-i18n="form.title">Formulário de interesse</h3>
+                    <form id="leadForm">
+                        <div class="field">
+                            <label for="nome" data-i18n="form.name">Seu nome</label>
+                            <input type="text" id="nome" placeholder="Ex: Rafael Silva" data-i18n-placeholder="form.namePlaceholder" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="whatsapp" data-i18n="form.whatsapp">Seu WhatsApp</label>
+                            <input type="tel" id="whatsapp" placeholder="(DDD) 9XXXX-XXXX" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="elo" data-i18n="form.elo">Seu elo atual</label>
+                            <input type="number" id="elo" placeholder="Ex: 1135" min="1100" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="plano" data-i18n="form.plan">Plano de interesse</label>
+                            <select id="plano" required>
+                                <option value="" data-i18n="form.planPlaceholder">Selecione um plano</option>
+                                <option value="avulso-1h" data-i18n="form.planSingle">Avulso (1h) - R$ 100</option>
+                                <option value="pacote-6h" data-i18n="form.planMid">Pacote 6h - R$ 425</option>
+                                <option value="pacote-12h" data-i18n="form.planFull">Pacote 12h - R$ 700</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="objetivo" data-i18n="form.goal">O que você quer melhorar?</label>
+                            <textarea id="objetivo" rows="4" placeholder="Matchups, macro, tomada de decisão, build order..." data-i18n-placeholder="form.goalPlaceholder" required></textarea>
+                        </div>
+
+                        <div class="loading" id="loadingMessage" data-i18n="form.loading">Enviando seu interesse...</div>
+                        <div class="success-message" id="successMessage">
+                            <span data-i18n="form.success">Cadastro enviado com sucesso. O lead foi salvo e a equipe pode seguir com o contato.</span>
+                        </div>
+                        <div class="error-message" id="errorMessage">
+                            <span data-i18n="form.serverError">O servidor não respondeu agora. Seus dados ficaram salvos localmente como backup.</span>
+                        </div>
+
+                        <button class="btn btn-primary" id="submitButton" type="submit" data-i18n="form.submit">Quero entrar</button>
+                    </form>
+                </article>
+            </div>
+        </section>
+
+        <section class="community-section" id="comunidade">
+            <div class="container">
+                <article class="community-card">
+                    <div class="community-top">
+                        <img class="mosca-logo" src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo do Mosca">
+                        <div>
+                            <div class="eyebrow" data-i18n="community.eyebrow">Comunidade</div>
+                            <h3 data-i18n="community.title">Comunidade do Mosca</h3>
+                        </div>
+                    </div>
+                    <div>
+                        <p data-i18n="community.copy">
+                            Acompanhe o Mosca nas plataformas principais e entre no Discord para participar da comunidade.
+                        </p>
+                        <div class="community-grid">
+                            <a class="community-link" href="https://discord.gg/9V3UsxMep" target="_blank" rel="noreferrer">
+                                <img src="IMAGENS/discord-white-icon.png" alt="Discord">
+                                <span>Discord</span>
+                            </a>
+                            <a class="community-link" href="https://liquipedia.net/ageofempires/Mosca" target="_blank" rel="noreferrer">
+                                <img src="IMAGENS/luquipedia%20logo%202017.png" alt="Liquipedia">
+                                <span>Liquipedia</span>
+                            </a>
+                            <a class="community-link" href="https://www.twitch.tv/xmosca" target="_blank" rel="noreferrer">
+                                <img src="IMAGENS/twitch-white-icon.png" alt="Twitch">
+                                <span>Twitch</span>
+                            </a>
+                            <span class="community-link disabled" title="Instagram em breve">
+                                <img src="IMAGENS/LOGO%20MOSCA.jpg" alt="Instagram">
+                                <span>Instagram</span>
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-layout">
+                <div>
+                    <div class="brand">
+                        <span class="brand-mark">
+                            <img src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo Mosca">
+                        </span>
+                        <span>Coach do Mosca</span>
+                    </div>
+                    <p data-i18n="footer.copy">
+                        Coaching de Age of Mythology com posicionamento competitivo, identidade
+                        premium e foco em jogadores 1100+.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 data-i18n="footer.navTitle">Navegação</h3>
+                    <div class="footer-links">
+                        <a href="#planos" data-i18n="nav.plans">Planos</a>
+                        <a href="#informacoes" data-i18n="nav.info">Informações</a>
+                        <a href="#lead-form" data-i18n="footer.form">Formulário</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 data-i18n="footer.operationTitle">Operação</h3>
+                    <div class="footer-links">
+                        <a href="#informacoes" data-i18n="footer.rules">Regras e validade dos pacotes</a>
+                        <a href="#contato" data-i18n="footer.queue">Fila de interesse</a>
+                    </div>
+                </div>
+            </div>
+
+            <p class="footer-note" data-i18n="footer.rights">&copy; 2026 Coach do Mosca. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const PLANILHA_URL = "/api/leads";
+        const translations = {
+            pt: {
+                "nav.home": "Início",
+                "nav.plans": "Planos",
+                "nav.info": "Informações",
+                "nav.contact": "Contato",
+                "nav.cta": "Entrar na fila",
+                "hero.eyebrow": "Age of Mythology • Coaching individual",
+                "hero.title": "Coach do Mosca",
+                "hero.copy": "Evolua com sessões individuais focadas em decisão, macro, matchups e leitura de jogo. Um acompanhamento direto para jogadores 1100+ que querem ter respostas rápidas e counterplays.",
+                "hero.primary": "Ver planos",
+                "hero.secondary": "Como funciona",
+                "hero.meta1": "Requisito mínimo: 1100+",
+                "hero.meta2": "Sessão individual via Discord",
+                "hero.meta3": "Vagas limitadas",
+                "offer.eyebrow": "Oferta",
+                "offer.title": "Coaching para jogadores 1100+",
+                "offer.copy": "Escolha entre uma sessão pontual ou pacotes pensados para acompanhar sua evolução com mais profundidade ao longo das semanas.",
+                "offer.notice": "Vagas limitadas. O coaching é destinado a jogadores com elo mínimo de 1100+.",
+                "plan.single.tag": "Avulso",
+                "plan.single.title": "1 hora",
+                "plan.single.note": "Entrada direta para quem quer uma sessão pontual.",
+                "plan.single.item1": "1 sessão individual de 1 hora",
+                "plan.single.item2": "Análise específica do seu momento",
+                "plan.single.item3": "Ideal para dúvida, ajuste ou direcionamento rápido",
+                "plan.single.cta": "Quero esse",
+                "plan.mid.tag": "Mais escolhido",
+                "plan.mid.title": "6 horas",
+                "plan.mid.note": "Melhor ponto de entrada para evolução consistente.",
+                "plan.mid.item1": "6 sessões individuais de 1 hora",
+                "plan.mid.item2": "Validade de 60 dias",
+                "plan.mid.item3": "Espaço suficiente para correção e acompanhamento",
+                "plan.mid.cta": "Tenho interesse",
+                "plan.full.tag": "Intensivo",
+                "plan.full.title": "12 horas",
+                "plan.full.note": "Opção mais forte para quem quer profundidade e ritmo.",
+                "plan.full.item1": "12 sessões individuais de 1 hora",
+                "plan.full.item2": "Validade de 120 dias",
+                "plan.full.item3": "Pacote pensado para evolução mais completa",
+                "plan.full.cta": "Entrar na fila",
+                "info.eyebrow": "Informações ao comprador",
+                "info.title": "Regras, formato e condições",
+                "info.copy": "Tudo o que você precisa saber antes de entrar na fila: formato, horários, validade dos pacotes, pagamento e remarcações.",
+                "info.rules.title": "Como funciona",
+                "info.rules.item1": "O coaching é individual e acontece via Discord, no canal de voz \"Sessão Particular\" no servidor \"Mosca Discord\".",
+                "info.rules.item2": "As sessões são de 1 hora cada e devem ser agendadas previamente. Faltas não serão descontadas.",
+                "info.rules.item3": "Remarcar uma sessão é possível com 12 horas de antecedência.",
+                "info.rules.item4": "Pagamento adiantado via PIX ou PayPal. No PayPal, o valor é ajustado por causa das taxas.",
+                "info.rules.item5": "Não há reembolso.",
+                "info.rules.item6": "O pacote de 12 horas possui validade de 120 dias. O pacote de 6 horas possui validade de 60 dias.",
+                "info.schedule.title": "Horários disponíveis",
+                "info.schedule.copy1": "Durante a semana, os horários ficam majoritariamente concentrados no período da noite, a partir das 17h no horário de Brasília, equivalente a 20 GMT.",
+                "info.schedule.copy2": "Nos fins de semana, os horários são variados e combinados diretamente com o aluno conforme disponibilidade.",
+                "info.schedule.chip1": "Semana: após 17h Brasília",
+                "info.schedule.chip2": "Referência: 20 GMT",
+                "info.schedule.chip3": "Fim de semana: a combinar",
+                "method.eyebrow": "Método",
+                "method.title": "Aula com foco no que muda seu jogo",
+                "method.copy": "A experiência foi organizada para passar confiança rapidamente: clareza de plano, acompanhamento individual e uma jornada simples até o contato.",
+                "method.card1.title": "Diagnóstico claro",
+                "method.card1.copy": "Identificação dos padrões que mais custam partidas: decisões atrasadas, economia sem plano e lutas mal escolhidas.",
+                "method.card1.small": "Ideal para sair do piloto automático",
+                "method.card2.title": "Plano de evolução",
+                "method.card2.copy": "Cada sessão fecha com prioridades práticas para aplicar nas próximas partidas e revisar no acompanhamento.",
+                "method.card2.small": "Menos teoria solta, mais execução",
+                "method.card3.title": "Leitura competitiva",
+                "method.card3.copy": "Ajustes em matchups, timing, scouting e tomada de decisão para jogar com mais consistência contra oponentes fortes.",
+                "method.card3.small": "Foco em Age of Mythology",
+                "contact.eyebrow": "Contato",
+                "contact.title": "Entrar na fila do Coach do Mosca",
+                "contact.copy": "Preencha os dados para registrar seu interesse. O elo ajuda a confirmar o requisito mínimo e o objetivo orienta o primeiro contato.",
+                "contact.item1": "Atendimento individual conforme disponibilidade do coach.",
+                "contact.item2": "Contato feito pelo WhatsApp informado no formulário.",
+                "contact.item3": "O formulário salva os dados no servidor local e mantém backup no navegador.",
+                "form.title": "Formulário de interesse",
+                "form.name": "Seu nome",
+                "form.namePlaceholder": "Ex: Rafael Silva",
+                "form.whatsapp": "Seu WhatsApp",
+                "form.elo": "Seu elo atual",
+                "form.plan": "Plano de interesse",
+                "form.planPlaceholder": "Selecione um plano",
+                "form.planSingle": "Avulso (1h) - R$ 100",
+                "form.planMid": "Pacote 6h - R$ 425",
+                "form.planFull": "Pacote 12h - R$ 700",
+                "form.goal": "O que você quer melhorar?",
+                "form.goalPlaceholder": "Matchups, macro, tomada de decisão, build order...",
+                "form.loading": "Enviando seu interesse...",
+                "form.success": "Cadastro enviado com sucesso. O lead foi salvo e a equipe pode seguir com o contato.",
+                "form.serverError": "O servidor local não respondeu agora. Seus dados ficaram salvos localmente como backup.",
+                "form.eloError": "O coaching do Mosca exige elo mínimo de 1100+. Revise esse campo antes de enviar.",
+                "form.submit": "Quero entrar",
+                "community.eyebrow": "Comunidade",
+                "community.title": "Comunidade do Mosca",
+                "community.copy": "Acompanhe o Mosca nas plataformas principais e entre no Discord para participar da comunidade.",
+                "footer.copy": "Coaching de Age of Mythology com posicionamento competitivo, identidade premium e foco em jogadores 1100+.",
+                "footer.navTitle": "Navegação",
+                "footer.form": "Formulário",
+                "footer.operationTitle": "Operação",
+                "footer.rules": "Regras e validade dos pacotes",
+                "footer.queue": "Fila de interesse",
+                "footer.rights": "© 2026 Coach do Mosca. Todos os direitos reservados."
+            },
+            en: {
+                "nav.home": "Home",
+                "nav.plans": "Plans",
+                "nav.info": "Info",
+                "nav.contact": "Contact",
+                "nav.cta": "Join the waitlist",
+                "hero.eyebrow": "Age of Mythology • Private coaching",
+                "hero.title": "Mosca Coaching",
+                "hero.copy": "Improve through private sessions focused on decision-making, macro, matchups, and game reading. Direct coaching for 1100+ players who want faster answers and better counterplay.",
+                "hero.primary": "View plans",
+                "hero.secondary": "How it works",
+                "hero.meta1": "Minimum rating: 1100+",
+                "hero.meta2": "Private session on Discord",
+                "hero.meta3": "Limited slots",
+                "offer.eyebrow": "Offer",
+                "offer.title": "Coaching for 1100+ players",
+                "offer.copy": "Choose a one-off session or packages designed to support your improvement with more depth over several weeks.",
+                "offer.notice": "Limited slots. Coaching is intended for players with a minimum 1100+ rating.",
+                "plan.single.tag": "Single",
+                "plan.single.title": "1 hour",
+                "plan.single.note": "A direct option for players who want one focused session.",
+                "plan.single.item1": "1 private 1-hour session",
+                "plan.single.item2": "Specific analysis of your current level",
+                "plan.single.item3": "Ideal for questions, adjustments, or quick direction",
+                "plan.single.cta": "Choose this",
+                "plan.mid.tag": "Most picked",
+                "plan.mid.title": "6 hours",
+                "plan.mid.note": "The best entry point for consistent improvement.",
+                "plan.mid.item1": "6 private 1-hour sessions",
+                "plan.mid.item2": "Valid for 60 days",
+                "plan.mid.item3": "Enough time for correction and follow-up",
+                "plan.mid.cta": "I'm interested",
+                "plan.full.tag": "Intensive",
+                "plan.full.title": "12 hours",
+                "plan.full.note": "The strongest option for players who want depth and rhythm.",
+                "plan.full.item1": "12 private 1-hour sessions",
+                "plan.full.item2": "Valid for 120 days",
+                "plan.full.item3": "A package designed for deeper improvement",
+                "plan.full.cta": "Join the waitlist",
+                "info.eyebrow": "Buyer information",
+                "info.title": "Rules, format, and terms",
+                "info.copy": "Everything you need to know before joining the waitlist: format, schedule, package validity, payment, and rescheduling.",
+                "info.rules.title": "How it works",
+                "info.rules.item1": "Coaching is private and takes place on Discord, in the \"Private Session\" voice channel on the \"Mosca Discord\" server.",
+                "info.rules.item2": "Sessions are 1 hour each and must be scheduled in advance. No-shows will not be deducted.",
+                "info.rules.item3": "Rescheduling is possible with 12 hours of notice.",
+                "info.rules.item4": "Payment is upfront via PIX or PayPal. PayPal prices are adjusted to account for fees.",
+                "info.rules.item5": "No refunds.",
+                "info.rules.item6": "The 12-hour package is valid for 120 days. The 6-hour package is valid for 60 days.",
+                "info.schedule.title": "Available times",
+                "info.schedule.copy1": "On weekdays, sessions are mostly available at night, starting at 5 PM Brasília time, equivalent to 20 GMT.",
+                "info.schedule.copy2": "On weekends, times vary and are arranged directly with the student based on availability.",
+                "info.schedule.chip1": "Weekdays: after 5 PM Brasília",
+                "info.schedule.chip2": "Reference: 20 GMT",
+                "info.schedule.chip3": "Weekends: arranged individually",
+                "method.eyebrow": "Method",
+                "method.title": "Sessions focused on what changes your game",
+                "method.copy": "The experience is structured to build confidence quickly: a clear plan, private follow-up, and a simple path to getting started.",
+                "method.card1.title": "Clear diagnosis",
+                "method.card1.copy": "Identify the patterns that cost the most games: delayed decisions, economy without a plan, and poorly chosen fights.",
+                "method.card1.small": "Ideal for getting out of autopilot",
+                "method.card2.title": "Improvement plan",
+                "method.card2.copy": "Each session ends with practical priorities to apply in your next games and review during follow-up.",
+                "method.card2.small": "Less loose theory, more execution",
+                "method.card3.title": "Competitive reading",
+                "method.card3.copy": "Adjust matchups, timing, scouting, and decision-making so you can play more consistently against stronger opponents.",
+                "method.card3.small": "Focused on Age of Mythology",
+                "contact.eyebrow": "Contact",
+                "contact.title": "Join the Mosca Coaching waitlist",
+                "contact.copy": "Fill in your details to register your interest. Your rating confirms the minimum requirement, and your goal helps guide the first contact.",
+                "contact.item1": "Private coaching based on the coach's availability.",
+                "contact.item2": "Contact will be made through the WhatsApp number provided in the form.",
+                "contact.item3": "The form saves data on the local server and keeps a browser backup.",
+                "form.title": "Interest form",
+                "form.name": "Your name",
+                "form.namePlaceholder": "Ex: Rafael Silva",
+                "form.whatsapp": "Your WhatsApp",
+                "form.elo": "Current rating",
+                "form.plan": "Plan of interest",
+                "form.planPlaceholder": "Select a plan",
+                "form.planSingle": "Single (1h) - R$ 100",
+                "form.planMid": "6h package - R$ 425",
+                "form.planFull": "12h package - R$ 700",
+                "form.goal": "What do you want to improve?",
+                "form.goalPlaceholder": "Matchups, macro, decision-making, build order...",
+                "form.loading": "Sending your interest...",
+                "form.success": "Form submitted successfully. The lead was saved and the team can follow up.",
+                "form.serverError": "The local server did not respond. Your data was saved locally as a backup.",
+                "form.eloError": "Mosca Coaching requires a minimum 1100+ rating. Please review this field before submitting.",
+                "form.submit": "Join now",
+                "community.eyebrow": "Community",
+                "community.title": "Mosca Community",
+                "community.copy": "Follow Mosca on the main platforms and join Discord to take part in the community.",
+                "footer.copy": "Age of Mythology coaching with competitive positioning, premium identity, and a focus on 1100+ players.",
+                "footer.navTitle": "Navigation",
+                "footer.form": "Form",
+                "footer.operationTitle": "Operation",
+                "footer.rules": "Rules and package validity",
+                "footer.queue": "Interest waitlist",
+                "footer.rights": "© 2026 Coach do Mosca. All rights reserved."
+            }
+        };
+
+        let currentLang = localStorage.getItem("mosca_lang") || "pt";
+
+        const leadForm = document.getElementById("leadForm");
+        const submitButton = document.getElementById("submitButton");
+        const loadingMessage = document.getElementById("loadingMessage");
+        const successMessage = document.getElementById("successMessage");
+        const errorMessage = document.getElementById("errorMessage");
+        const languageToggle = document.getElementById("languageToggle");
+        const languageWidget = document.getElementById("languageWidget");
+        const languageMenu = document.getElementById("languageMenu");
+
+        function t(key) {
+            return translations[currentLang][key] || translations.pt[key] || key;
+        }
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem("mosca_lang", lang);
+            document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
+
+            document.querySelectorAll("[data-i18n]").forEach((element) => {
+                element.textContent = t(element.dataset.i18n);
+            });
+
+            document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+                element.placeholder = t(element.dataset.i18nPlaceholder);
+            });
+
+            if (languageToggle) {
+                languageToggle.textContent = lang.toUpperCase();
+                languageToggle.setAttribute("aria-label", lang === "en" ? "Language menu" : "Menu de idioma");
+            }
+
+            document.querySelectorAll("[data-lang-option]").forEach((button) => {
+                button.classList.toggle("is-active", button.dataset.langOption === lang);
+            });
+
+            renderHeroTitle(t("hero.title"));
+        }
+
+        function setLanguageMenu(open) {
+            if (!languageWidget || !languageToggle || !languageMenu) return;
+
+            languageWidget.classList.toggle("is-open", open);
+            languageToggle.setAttribute("aria-expanded", String(open));
+            languageMenu.setAttribute("aria-hidden", String(!open));
+        }
+
+        leadForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            toggleStatus("loading");
+
+            const elo = Number(document.getElementById("elo").value);
+
+            if (elo < 1100) {
+                toggleStatus("error");
+                errorMessage.textContent = t("form.eloError");
+                return;
+            }
+
+            errorMessage.textContent = t("form.serverError");
+
+            const formData = {
+                coach: "Mosca",
+                nome: document.getElementById("nome").value.trim(),
+                whatsapp: document.getElementById("whatsapp").value.replace(/\D/g, ""),
+                elo: elo,
+                plano: document.getElementById("plano").value,
+                objetivo: document.getElementById("objetivo").value.trim(),
+                data: new Date().toLocaleString("pt-BR")
+            };
+
+            try {
+                await enviarParaPlanilha(formData);
+                toggleStatus("success");
+                leadForm.reset();
+            } catch (error) {
+                salvarLocalmente(formData);
+                toggleStatus("error");
+                console.error("Erro ao enviar lead:", error);
+            }
+        });
+
+        async function enviarParaPlanilha(dados) {
+            const response = await fetch(PLANILHA_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dados)
+            });
+
+            if (!response.ok) {
+                throw new Error("Falha ao salvar lead no banco local.");
+            }
+
+            salvarLocalmente(dados);
+            return response;
+        }
+
+        function salvarLocalmente(dados) {
+            const leadsSalvos = JSON.parse(localStorage.getItem("leads_mosca") || "[]");
+            leadsSalvos.push(dados);
+            localStorage.setItem("leads_mosca", JSON.stringify(leadsSalvos));
+        }
+
+        function toggleStatus(type) {
+            loadingMessage.style.display = type === "loading" ? "block" : "none";
+            successMessage.style.display = type === "success" ? "block" : "none";
+            errorMessage.style.display = type === "error" ? "block" : "none";
+            submitButton.disabled = type === "loading";
+            submitButton.style.opacity = type === "loading" ? "0.72" : "1";
+        }
+
+        function renderHeroTitle(text) {
+            const title = document.getElementById("heroTitle");
+            if (!title) return;
+
+            const originalText = text || "";
+            title.textContent = "";
+            title.setAttribute("aria-label", originalText);
+
+            const particlesLayer = document.createElement("span");
+            particlesLayer.className = "title-particles";
+            title.appendChild(particlesLayer);
+
+            const fragment = document.createDocumentFragment();
+            const words = originalText.split(" ");
+
+            words.forEach((word, wordIndex) => {
+                const wordSpan = document.createElement("span");
+                wordSpan.className = "display-word";
+
+                for (const char of word) {
+                    const letter = document.createElement("span");
+                    letter.className = "display-letter";
+                    letter.textContent = char;
+                    letter.addEventListener("mouseenter", (event) => emitLetterParticles(event.currentTarget, particlesLayer));
+                    wordSpan.appendChild(letter);
+                }
+
+                fragment.appendChild(wordSpan);
+
+                if (wordIndex < words.length - 1) {
+                    const space = document.createElement("span");
+                    space.className = "display-letter is-space";
+                    space.innerHTML = "&nbsp;";
+                    fragment.appendChild(space);
+                }
+            });
+
+            title.appendChild(fragment);
+        }
+
+        function initHeroTitleParticles() {
+            renderHeroTitle(t("hero.title"));
+        }
+
+        function emitLetterParticles(letter, layer) {
+            const letterRect = letter.getBoundingClientRect();
+            const layerRect = layer.getBoundingClientRect();
+            const centerX = (letterRect.left - layerRect.left) + (letterRect.width / 2);
+            const centerY = (letterRect.top - layerRect.top) + (letterRect.height / 2);
+            const total = 12;
+
+            for (let i = 0; i < total; i += 1) {
+                const particle = document.createElement("span");
+                particle.className = "title-particle";
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 16 + Math.random() * 30;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance - (Math.random() * 10);
+                const hueBlue = "rgba(86, 146, 255, 0.9)";
+                const hueGold = "rgba(214, 180, 108, 0.8)";
+                const color = Math.random() > 0.74 ? hueGold : hueBlue;
+
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+                particle.style.background = color;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                particle.style.setProperty("--dx", `${dx}px`);
+                particle.style.setProperty("--dy", `${dy}px`);
+                particle.style.width = `${3 + Math.random() * 4}px`;
+                particle.style.height = particle.style.width;
+
+                layer.appendChild(particle);
+                particle.addEventListener("animationend", () => particle.remove(), { once: true });
+            }
+        }
+
+        function initPremiumEffects() {
+            const effectsLayer = document.querySelector(".hero-effects");
+
+            if (effectsLayer) {
+                const totalDots = window.matchMedia("(max-width: 760px)").matches ? 18 : 34;
+                const fragment = document.createDocumentFragment();
+
+                for (let i = 0; i < totalDots; i += 1) {
+                    const dot = document.createElement("span");
+                    dot.className = "data-dot";
+                    dot.style.left = `${56 + Math.random() * 38}%`;
+                    dot.style.top = `${12 + Math.random() * 70}%`;
+                    dot.style.setProperty("--duration", `${4.5 + Math.random() * 5.5}s`);
+                    dot.style.setProperty("--delay", `${Math.random() * -7}s`);
+                    dot.style.setProperty("--shift-x", `${-34 + Math.random() * 68}px`);
+                    dot.style.setProperty("--shift-y", `${-22 - Math.random() * 58}px`);
+                    fragment.appendChild(dot);
+                }
+
+                effectsLayer.appendChild(fragment);
+            }
+
+            const revealItems = document.querySelectorAll(
+                ".section-header, .notice-band, .offer-panel, .rules-panel, .schedule-panel, .testimonial-panel, .form-panel, .community-card"
+            );
+
+            revealItems.forEach((item) => item.classList.add("reveal"));
+
+            if ("IntersectionObserver" in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("is-visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+
+                revealItems.forEach((item) => observer.observe(item));
+            } else {
+                revealItems.forEach((item) => item.classList.add("is-visible"));
+            }
+
+            window.addEventListener("pointermove", (event) => {
+                document.documentElement.style.setProperty("--mouse-x", `${event.clientX}px`);
+                document.documentElement.style.setProperty("--mouse-y", `${event.clientY}px`);
+            }, { passive: true });
+        }
+
+        function initScrollStorm() {
+            const storm = document.querySelector(".scroll-storm");
+            const mainPath = document.getElementById("stormMainPath");
+            const glowPath = document.querySelector(".storm-main-glow");
+            const branches = document.querySelectorAll(".storm-branch");
+            const contact = document.getElementById("lead-form");
+
+            if (!storm || !mainPath || !contact) return;
+
+            const mainLength = mainPath.getTotalLength();
+            mainPath.style.strokeDasharray = mainLength;
+            mainPath.style.strokeDashoffset = mainLength;
+
+            if (glowPath) {
+                glowPath.style.strokeDasharray = mainLength;
+                glowPath.style.strokeDashoffset = mainLength;
+            }
+
+            branches.forEach((branch) => {
+                const branchLength = branch.getTotalLength();
+                branch.style.strokeDasharray = branchLength;
+                branch.style.strokeDashoffset = branchLength;
+            });
+
+            let ticking = false;
+            function clamp(value, min, max) {
+                return Math.min(Math.max(value, min), max);
+            }
+
+            function updateStormMetrics() {
+                const contactTop = contact.offsetTop;
+                const contactMid = contactTop + (contact.offsetHeight * 0.42);
+                storm.style.setProperty("--storm-height", `${Math.max(contactMid + 420, window.innerHeight)}px`);
+                storm.style.setProperty("--storm-fog-top", `${Math.max(contactTop - 180, 0)}px`);
+            }
+
+            function updateStorm() {
+                ticking = false;
+
+                const contactTop = contact.offsetTop;
+                const contactTarget = contactTop + (contact.offsetHeight * 0.32);
+                const drawPoint = window.scrollY + (window.innerHeight * 0.42);
+                const progress = clamp(drawPoint / contactTarget, 0, 1);
+                const dashOffset = mainLength * (1 - progress);
+
+                mainPath.style.strokeDashoffset = dashOffset;
+                if (glowPath) {
+                    glowPath.style.strokeDashoffset = dashOffset;
+                    glowPath.style.opacity = 0.25 + (progress * 0.55);
+                }
+
+                branches.forEach((branch) => {
+                    const branchAt = Number(branch.dataset.branchAt || 0);
+                    const branchProgress = clamp((progress - branchAt) / 0.08, 0, 1);
+                    const branchLength = branch.getTotalLength();
+                    branch.style.strokeDashoffset = branchLength * (1 - branchProgress);
+                    branch.style.setProperty("--branch-opacity", `${0.2 + branchProgress * 0.72}`);
+                    branch.classList.toggle("is-live", branchProgress > 0.04);
+                });
+
+                const fogStart = contactTop - window.innerHeight * 0.55;
+                const fogEnd = contactTop + contact.offsetHeight * 0.16;
+                const fogProgress = clamp((window.scrollY - fogStart) / Math.max(fogEnd - fogStart, 1), 0, 1);
+                storm.style.setProperty("--storm-fog-opacity", `${fogProgress}`);
+            }
+
+            function requestStormUpdate() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(updateStorm);
+            }
+
+            updateStormMetrics();
+            updateStorm();
+
+            window.addEventListener("scroll", requestStormUpdate, { passive: true });
+            window.addEventListener("resize", () => {
+                updateStormMetrics();
+                requestStormUpdate();
+            });
+        }
+
+        document.getElementById("whatsapp").addEventListener("input", function (event) {
+            let value = event.target.value.replace(/\D/g, "").slice(0, 11);
+
+            if (value.length > 0) {
+                if (value.length <= 2) {
+                    value = "(" + value;
+                } else if (value.length <= 7) {
+                    value = "(" + value.slice(0, 2) + ") " + value.slice(2);
+                } else {
+                    value = "(" + value.slice(0, 2) + ") " + value.slice(2, 7) + "-" + value.slice(7);
+                }
+            }
+
+            event.target.value = value;
+        });
+
+        if (languageToggle) {
+            languageToggle.addEventListener("click", (event) => {
+                event.stopPropagation();
+                setLanguageMenu(!languageWidget.classList.contains("is-open"));
+            });
+        }
+
+        document.querySelectorAll("[data-lang-option]").forEach((button) => {
+            button.addEventListener("click", (event) => {
+                event.stopPropagation();
+                applyLanguage(button.dataset.langOption);
+                setLanguageMenu(false);
+            });
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!languageWidget || languageWidget.contains(event.target)) return;
+            setLanguageMenu(false);
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                setLanguageMenu(false);
+            }
+        });
+
+        applyLanguage(currentLang);
+        initHeroTitleParticles();
+        initPremiumEffects();
+        initScrollStorm();
+    </script>
+</body>
+</html>
