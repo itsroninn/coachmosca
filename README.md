@@ -10,6 +10,8 @@ Site institucional e comercial para venda de coaching de Age of Mythology.
 - `server.py`: servidor local usado para testes de captura de leads.
 - `leads_mosca.db`: banco local de teste.
 
+Nao publique arquivos `.db`, `.py`, `.md` ou `.txt` junto com o site estatico em producao. O servidor local bloqueia esses arquivos por seguranca, mas a hospedagem final tambem precisa impedir download direto de banco, codigo e documentos internos.
+
 ## Como abrir localmente
 
 Para visualizar o site sem backend:
@@ -21,14 +23,18 @@ Para visualizar o site sem backend:
 Para testar com o servidor Python local:
 
 ```bash
+set MOSCA_ADMIN_USER=admin
+set MOSCA_ADMIN_PASSWORD=troque-esta-senha
 python server.py
 ```
 
 Depois acesse o endereco local indicado pelo terminal, normalmente:
 
 ```text
-http://localhost:8000
+http://127.0.0.1:5500
 ```
+
+O painel `painel_leads.html` e as rotas de leitura/exportacao de leads exigem autenticacao HTTP Basic configurada por `MOSCA_ADMIN_USER` e `MOSCA_ADMIN_PASSWORD`. Sem essas variaveis, a leitura de leads fica bloqueada.
 
 ## Idiomas
 
@@ -37,7 +43,7 @@ O site possui alternancia entre:
 - Portugues
 - Ingles
 
-O botao `PT / EN` fica no topo da pagina. A escolha e salva no navegador com `localStorage`, entao o idioma permanece apos recarregar a pagina.
+O botao `PT / EN` fica no topo da pagina. Apenas a escolha de idioma e salva no navegador com `localStorage`; dados pessoais de leads nao devem ser persistidos no navegador.
 
 ## Formulario e leads
 

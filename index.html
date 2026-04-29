@@ -1912,7 +1912,7 @@
                 <a href="#planos" data-i18n="nav.plans">Planos</a>
                 <a href="#informacoes" data-i18n="nav.info">Informações</a>
                 <a href="#contato" data-i18n="nav.contact">Contato</a>
-                <a class="btn btn-primary" href="#lead-form" data-i18n="nav.cta">Entrar na fila</a>
+                <a class="btn btn-primary" href="#lead-form" data-i18n="nav.cta">Entrar em contato</a>
             </nav>
         </div>
     </header>
@@ -2122,31 +2122,38 @@
                     <ul class="rules-list">
                         <li data-i18n="contact.item1">Atendimento individual conforme disponibilidade do coach.</li>
                         <li data-i18n="contact.item2">Contato feito pelo WhatsApp informado no formulário. Discord disponível</li>
-                        <li data-i18n="contact.item3">O formulário salva os dados no servidor local e mantém backup no navegador.</li>
+                        <li data-i18n="contact.item3">O formulário envia os dados apenas para a API configurada, sem armazenar leads no navegador.</li>
                     </ul>
                 </article>
 
                 <article class="card form-panel">
                     <h3 data-i18n="form.title">Formulário de interesse</h3>
-                    <form id="leadForm">
+                    <form id="leadForm" name="lead-mosca" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                        <input type="hidden" name="form-name" value="lead-mosca">
+                        <input type="hidden" name="coach" value="Mosca">
+                        <input type="hidden" name="idioma" id="idioma">
+                        <input type="hidden" name="data" id="dataEnvio">
+                        <p style="display: none;">
+                            <label>Não preencha este campo: <input name="bot-field"></label>
+                        </p>
                         <div class="field">
                             <label for="nome" data-i18n="form.name">Seu nome</label>
-                            <input type="text" id="nome" placeholder="Ex: Rafael Silva" data-i18n-placeholder="form.namePlaceholder" required>
+                            <input type="text" id="nome" name="nome" placeholder="Ex: Rafael Silva" data-i18n-placeholder="form.namePlaceholder" autocomplete="name" maxlength="80" required>
                         </div>
 
                         <div class="field">
                             <label for="whatsapp" data-i18n="form.whatsapp">Seu WhatsApp</label>
-                            <input type="tel" id="whatsapp" placeholder="(DDD) 9XXXX-XXXX" required>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(DDD) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" maxlength="20" required>
                         </div>
 
                         <div class="field">
                             <label for="elo" data-i18n="form.elo">Seu elo atual</label>
-                            <input type="number" id="elo" placeholder="Ex: 1135" min="1100" required>
+                            <input type="number" id="elo" name="elo" placeholder="Ex: 1135" min="1100" max="3000" required>
                         </div>
 
                         <div class="field">
                             <label for="plano" data-i18n="form.plan">Plano de interesse</label>
-                            <select id="plano" required>
+                            <select id="plano" name="plano" required>
                                 <option value="" data-i18n="form.planPlaceholder">Selecione um plano</option>
                                 <option value="avulso-1h" data-i18n="form.planSingle">Avulso (1h) - R$ 100</option>
                                 <option value="pacote-6h" data-i18n="form.planMid">Pacote 6h - R$ 425</option>
@@ -2156,7 +2163,7 @@
 
                         <div class="field">
                             <label for="objetivo" data-i18n="form.goal">O que você quer melhorar?</label>
-                            <textarea id="objetivo" rows="4" placeholder="Matchups, macro, tomada de decisão, build order..." data-i18n-placeholder="form.goalPlaceholder" required></textarea>
+                            <textarea id="objetivo" name="objetivo" rows="4" maxlength="800" placeholder="Matchups, macro, tomada de decisão, build order..." data-i18n-placeholder="form.goalPlaceholder" required></textarea>
                         </div>
 
                         <div class="loading" id="loadingMessage" data-i18n="form.loading">Enviando seu interesse...</div>
@@ -2164,7 +2171,7 @@
                             <span data-i18n="form.success">Cadastro enviado com sucesso. O lead foi salvo e a equipe pode seguir com o contato.</span>
                         </div>
                         <div class="error-message" id="errorMessage">
-                            <span data-i18n="form.serverError">O servidor não respondeu agora. Seus dados ficaram salvos localmente como backup.</span>
+                            <span data-i18n="form.serverError">O servidor não respondeu agora. Revise a conexão e tente novamente.</span>
                         </div>
 
                         <button class="btn btn-primary" id="submitButton" type="submit" data-i18n="form.submit">Quero entrar</button>
@@ -2188,15 +2195,15 @@
                             Acompanhe o Mosca nas plataformas principais e entre no Discord para participar da comunidade.
                         </p>
                         <div class="community-grid">
-                            <a class="community-link" href="https://discord.gg/9V3UsxMep" target="_blank" rel="noreferrer">
+                            <a class="community-link" href="https://discord.gg/9V3UsxMep" target="_blank" rel="noopener noreferrer">
                                 <img src="IMAGENS/discord-white-icon.png" alt="Discord">
                                 <span>Discord</span>
                             </a>
-                            <a class="community-link" href="https://liquipedia.net/ageofempires/Mosca" target="_blank" rel="noreferrer">
+                            <a class="community-link" href="https://liquipedia.net/ageofempires/Mosca" target="_blank" rel="noopener noreferrer">
                                 <img src="IMAGENS/luquipedia%20logo%202017.png" alt="Liquipedia">
                                 <span>Liquipedia</span>
                             </a>
-                            <a class="community-link" href="https://www.twitch.tv/xmosca" target="_blank" rel="noreferrer">
+                            <a class="community-link" href="https://www.twitch.tv/xmosca" target="_blank" rel="noopener noreferrer">
                                 <img src="IMAGENS/twitch-white-icon.png" alt="Twitch">
                                 <span>Twitch</span>
                             </a>
@@ -2250,7 +2257,7 @@
     </footer>
 
     <script>
-        const PLANILHA_URL = "/api/leads";
+        const MOSCA_WHATSAPP_NUMBER = "5511988750843";
         const translations = {
             pt: {
                 "nav.home": "Início",
@@ -2324,7 +2331,7 @@
                 "contact.copy": "Preencha os dados para registrar seu interesse. O elo ajuda a confirmar o requisito mínimo e o objetivo orienta o primeiro contato.",
                 "contact.item1": "Atendimento individual conforme disponibilidade do coach.",
                 "contact.item2": "Contato feito pelo WhatsApp informado no formulário.",
-                "contact.item3": "O formulário salva os dados no servidor local e mantém backup no navegador.",
+                "contact.item3": "O formulário envia os dados apenas para a API configurada, sem armazenar leads no navegador.",
                 "form.title": "Formulário de interesse",
                 "form.name": "Seu nome",
                 "form.namePlaceholder": "Ex: Rafael Silva",
@@ -2338,8 +2345,8 @@
                 "form.goal": "O que você quer melhorar?",
                 "form.goalPlaceholder": "Matchups, macro, tomada de decisão, build order...",
                 "form.loading": "Enviando seu interesse...",
-                "form.success": "Cadastro enviado com sucesso. O lead foi salvo e a equipe pode seguir com o contato.",
-                "form.serverError": "O servidor local não respondeu agora. Seus dados ficaram salvos localmente como backup.",
+                "form.success": "Cadastro salvo no Netlify. O WhatsApp do Mosca foi aberto com a mensagem preenchida.",
+                "form.serverError": "Não foi possível salvar o cadastro agora. Revise a conexão e tente novamente.",
                 "form.eloError": "O coaching do Mosca exige elo mínimo de 1100+. Revise esse campo antes de enviar.",
                 "form.submit": "Quero entrar",
                 "community.eyebrow": "Comunidade",
@@ -2425,7 +2432,7 @@
                 "contact.copy": "Fill in your details to register your interest. Your rating confirms the minimum requirement, and your goal helps guide the first contact.",
                 "contact.item1": "Private coaching based on the coach's availability.",
                 "contact.item2": "Contact will be made through the WhatsApp number provided in the form.",
-                "contact.item3": "The form saves data on the local server and keeps a browser backup.",
+                "contact.item3": "The form sends data only to the configured API and does not store leads in the browser.",
                 "form.title": "Interest form",
                 "form.name": "Your name",
                 "form.namePlaceholder": "Ex: Rafael Silva",
@@ -2439,8 +2446,8 @@
                 "form.goal": "What do you want to improve?",
                 "form.goalPlaceholder": "Matchups, macro, decision-making, build order...",
                 "form.loading": "Sending your interest...",
-                "form.success": "Form submitted successfully. The lead was saved and the team can follow up.",
-                "form.serverError": "The local server did not respond. Your data was saved locally as a backup.",
+                "form.success": "Registration saved on Netlify. Mosca's WhatsApp was opened with the message filled in.",
+                "form.serverError": "Could not save the registration right now. Check the connection and try again.",
                 "form.eloError": "Mosca Coaching requires a minimum 1100+ rating. Please review this field before submitting.",
                 "form.submit": "Join now",
                 "community.eyebrow": "Community",
@@ -2456,7 +2463,8 @@
             }
         };
 
-        let currentLang = localStorage.getItem("mosca_lang") || "pt";
+        const storedLang = localStorage.getItem("mosca_lang");
+        let currentLang = Object.prototype.hasOwnProperty.call(translations, storedLang) ? storedLang : "pt";
 
         const leadForm = document.getElementById("leadForm");
         const submitButton = document.getElementById("submitButton");
@@ -2472,6 +2480,9 @@
         }
 
         function applyLanguage(lang) {
+            if (!Object.prototype.hasOwnProperty.call(translations, lang)) {
+                lang = "pt";
+            }
             currentLang = lang;
             localStorage.setItem("mosca_lang", lang);
             document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
@@ -2516,8 +2527,6 @@
                 return;
             }
 
-            errorMessage.textContent = t("form.serverError");
-
             const formData = {
                 coach: "Mosca",
                 nome: document.getElementById("nome").value.trim(),
@@ -2525,41 +2534,79 @@
                 elo: elo,
                 plano: document.getElementById("plano").value,
                 objetivo: document.getElementById("objetivo").value.trim(),
+                idioma: currentLang.toUpperCase(),
                 data: new Date().toLocaleString("pt-BR")
             };
 
             try {
-                await enviarParaPlanilha(formData);
+                document.getElementById("idioma").value = formData.idioma;
+                document.getElementById("dataEnvio").value = formData.data;
+                await enviarParaNetlify(formData);
+                abrirWhatsAppMosca(formData);
                 toggleStatus("success");
                 leadForm.reset();
             } catch (error) {
-                salvarLocalmente(formData);
                 toggleStatus("error");
+                errorMessage.textContent = t("form.serverError");
                 console.error("Erro ao enviar lead:", error);
             }
         });
 
-        async function enviarParaPlanilha(dados) {
-            const response = await fetch(PLANILHA_URL, {
+        async function enviarParaNetlify(dados) {
+            const payload = new URLSearchParams({
+                "form-name": "lead-mosca",
+                coach: dados.coach,
+                nome: dados.nome,
+                whatsapp: dados.whatsapp,
+                elo: String(dados.elo),
+                plano: dados.plano,
+                objetivo: dados.objetivo,
+                idioma: dados.idioma,
+                data: dados.data
+            });
+
+            const response = await fetch("/", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: JSON.stringify(dados)
+                body: payload.toString()
             });
 
             if (!response.ok) {
-                throw new Error("Falha ao salvar lead no banco local.");
+                throw new Error("Falha ao salvar lead no Netlify Forms.");
             }
 
-            salvarLocalmente(dados);
             return response;
         }
 
-        function salvarLocalmente(dados) {
-            const leadsSalvos = JSON.parse(localStorage.getItem("leads_mosca") || "[]");
-            leadsSalvos.push(dados);
-            localStorage.setItem("leads_mosca", JSON.stringify(leadsSalvos));
+        function abrirWhatsAppMosca(dados) {
+            const planoSelecionado = document.getElementById("plano").selectedOptions[0]?.textContent || dados.plano;
+            const mensagem = currentLang === "en"
+                ? [
+                    "New lead for Mosca Coaching",
+                    "",
+                    `Name: ${dados.nome}`,
+                    `WhatsApp: ${dados.whatsapp}`,
+                    `Current rating: ${dados.elo}`,
+                    `Plan of interest: ${planoSelecionado}`,
+                    `Goal: ${dados.objetivo}`,
+                    `Site language: ${currentLang.toUpperCase()}`,
+                    `Date: ${dados.data}`
+                ].join("\n")
+                : [
+                    "Novo interessado no Coach do Mosca",
+                    "",
+                    `Nome: ${dados.nome}`,
+                    `WhatsApp: ${dados.whatsapp}`,
+                    `Elo atual: ${dados.elo}`,
+                    `Plano de interesse: ${planoSelecionado}`,
+                    `Objetivo: ${dados.objetivo}`,
+                    `Idioma do site: ${currentLang.toUpperCase()}`,
+                    `Data: ${dados.data}`
+                ].join("\n");
+            const whatsappUrl = `https://wa.me/${MOSCA_WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+            window.open(whatsappUrl, "_blank", "noopener,noreferrer");
         }
 
         function toggleStatus(type) {
@@ -2602,7 +2649,7 @@
                 if (wordIndex < words.length - 1) {
                     const space = document.createElement("span");
                     space.className = "display-letter is-space";
-                    space.innerHTML = "&nbsp;";
+                    space.textContent = "\u00a0";
                     fragment.appendChild(space);
                 }
             });
