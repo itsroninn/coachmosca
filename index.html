@@ -13,27 +13,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-night: #090f18;
-            --bg-deep: #101826;
+            --color-bg: #090f18;
+            --color-bg-deep: #070b12;
+            --color-bg-elevated: #101826;
+            --color-surface: rgba(11, 17, 26, 0.82);
+            --color-surface-soft: rgba(255, 255, 255, 0.05);
+            --color-surface-strong: rgba(255, 255, 255, 0.08);
+            --color-border: rgba(255, 255, 255, 0.10);
+            --color-border-gold: rgba(214, 180, 108, 0.28);
+            --color-text: #f6f0e6;
+            --color-text-soft: #c5ccd8;
+            --color-text-muted: #7f8893;
+            --color-gold: #d6b46c;
+            --color-gold-strong: #f1d28c;
+            --color-blue: #4f77b9;
+            --color-blue-strong: #76b4ff;
+            --color-red: #b5453c;
+            --color-success: #61b490;
+            --color-error: #d06b63;
+            --font-display: Cinzel, Georgia, serif;
+            --font-body: Rajdhani, "Segoe UI", Arial, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 2rem;
+            --font-size-2xl: 3rem;
+            --font-size-display: clamp(2.8rem, 6vw, 5.8rem);
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 22px;
+            --radius-pill: 999px;
+            --shadow-panel: 0 24px 70px rgba(0, 0, 0, 0.34);
+            --shadow-panel-strong: 0 32px 92px rgba(0, 0, 0, 0.42);
+            --shadow-focus: 0 0 0 4px rgba(214, 180, 108, 0.12);
+            --layout-max-width: 1180px;
+            --bg-night: var(--color-bg);
+            --bg-deep: var(--color-bg-elevated);
             --bg-stone: #1b2430;
-            --panel: rgba(15, 24, 38, 0.9);
-            --panel-soft: rgba(255, 255, 255, 0.05);
-            --panel-strong: rgba(255, 255, 255, 0.08);
-            --text-main: #f6f0e6;
-            --text-soft: #b8bec9;
-            --gold: #d6b46c;
-            --gold-bright: #f1d28c;
-            --royal-blue: #4f77b9;
-            --war-red: #b5453c;
-            --stone: #7f8893;
-            --line: rgba(214, 180, 108, 0.18);
-            --success: #61b490;
-            --danger: #d06b63;
-            --shadow: 0 20px 50px rgba(0, 0, 0, 0.38);
-            --radius-lg: 22px;
-            --radius-md: 16px;
-            --radius-sm: 12px;
-            --max-width: 1180px;
+            --panel: var(--color-surface);
+            --panel-soft: var(--color-surface-soft);
+            --panel-strong: var(--color-surface-strong);
+            --text-main: var(--color-text);
+            --text-soft: var(--color-text-soft);
+            --gold: var(--color-gold);
+            --gold-bright: var(--color-gold-strong);
+            --royal-blue: var(--color-blue);
+            --war-red: var(--color-red);
+            --stone: var(--color-text-muted);
+            --line: var(--color-border-gold);
+            --success: var(--color-success);
+            --danger: var(--color-error);
+            --shadow: var(--shadow-panel);
+            --max-width: var(--layout-max-width);
         }
 
         * {
@@ -59,6 +102,16 @@
         a {
             color: inherit;
             text-decoration: none;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            outline: none;
+            border-color: var(--color-gold);
+            box-shadow: var(--shadow-focus);
         }
 
         img {
@@ -176,6 +229,18 @@
 
         .btn:hover {
             transform: translateY(-2px);
+        }
+
+        .btn:disabled,
+        .btn[aria-disabled="true"] {
+            cursor: not-allowed;
+            opacity: 0.64;
+            transform: none;
+        }
+
+        .btn:disabled::after,
+        .btn[aria-disabled="true"]::after {
+            display: none;
         }
 
         .btn:hover::after {
@@ -633,17 +698,38 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .field input:focus,
-        .field select:focus,
-        .field textarea:focus {
+        .field input:focus-visible,
+        .field select:focus-visible,
+        .field textarea:focus-visible {
             outline: none;
-            border-color: rgba(214, 180, 108, 0.4);
-            box-shadow: 0 0 0 4px rgba(214, 180, 108, 0.08);
+            border-color: var(--color-gold);
+            box-shadow: var(--shadow-focus);
         }
 
         .field input::placeholder,
         .field textarea::placeholder {
             color: rgba(255, 255, 255, 0.34);
+        }
+
+        .field-error {
+            min-height: 1.1em;
+            color: var(--color-error);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+
+        .field.has-error input,
+        .field.has-error select,
+        .field.has-error textarea {
+            border-color: var(--color-error);
+            background: rgba(208, 107, 99, 0.08);
+        }
+
+        .form-meta {
+            display: flex;
+            justify-content: flex-end;
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
         }
 
         .community-section {
@@ -697,6 +783,8 @@
         }
 
         .community-link {
+            --brand-color: var(--color-gold);
+            --brand-glow: rgba(214, 180, 108, 0.26);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -707,13 +795,43 @@
             background: rgba(255, 255, 255, 0.04);
             color: var(--text-main);
             font-weight: 600;
-            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
         }
 
         .community-link:hover {
             transform: translateY(-2px);
-            border-color: rgba(214, 180, 108, 0.48);
-            background: rgba(214, 180, 108, 0.08);
+            border-color: var(--brand-color);
+            background:
+                linear-gradient(135deg, color-mix(in srgb, var(--brand-color) 24%, transparent), rgba(255, 255, 255, 0.04));
+            box-shadow:
+                0 18px 42px var(--brand-glow),
+                0 0 0 1px color-mix(in srgb, var(--brand-color) 32%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.16);
+            color: #ffffff;
+        }
+
+        .community-link:hover img {
+            filter: drop-shadow(0 0 10px var(--brand-color));
+        }
+
+        .community-link.discord {
+            --brand-color: #5865f2;
+            --brand-glow: rgba(88, 101, 242, 0.34);
+        }
+
+        .community-link.liquipedia {
+            --brand-color: #4aa3df;
+            --brand-glow: rgba(74, 163, 223, 0.32);
+        }
+
+        .community-link.twitch {
+            --brand-color: #9146ff;
+            --brand-glow: rgba(145, 70, 255, 0.36);
+        }
+
+        .community-link.youtube {
+            --brand-color: #ff0000;
+            --brand-glow: rgba(255, 0, 0, 0.32);
         }
 
         .community-link.disabled {
@@ -748,11 +866,14 @@
             display: none;
             padding: 16px 18px;
             border-radius: 14px;
+            font-weight: 600;
+            line-height: 1.45;
         }
 
         .loading {
             background: rgba(79, 119, 185, 0.1);
             color: #c8d7f5;
+            border: 1px solid rgba(79, 119, 185, 0.24);
         }
 
         .success-message {
@@ -884,13 +1005,27 @@
             .community-grid {
                 grid-template-columns: 1fr;
             }
+
+            .contact-highlight {
+                grid-template-columns: 1fr;
+            }
+
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .display-letter,
-            .title-particle {
+            *,
+            *::before,
+            *::after {
                 animation: none !important;
                 transition: none !important;
+                scroll-behavior: auto !important;
+            }
+
+            .cursor-aura,
+            .edge-energy,
+            .hero-effects,
+            .title-particles {
+                display: none !important;
             }
         }
 
@@ -1042,6 +1177,78 @@
             background:
                 radial-gradient(circle 260px at var(--mouse-x, 50%) var(--mouse-y, 28%), rgba(79, 119, 185, 0.16), transparent 70%);
             mix-blend-mode: screen;
+        }
+
+        .edge-energy {
+            position: fixed;
+            top: -90px;
+            bottom: -120px;
+            z-index: 1;
+            width: min(24vw, 360px);
+            pointer-events: none;
+            opacity: 0.72;
+            overflow: visible;
+            mix-blend-mode: screen;
+        }
+
+        .edge-energy-left {
+            left: 0;
+            background:
+                radial-gradient(ellipse at 0% 18%, rgba(118, 180, 255, 0.16), transparent 54%),
+                radial-gradient(ellipse at 24% 72%, rgba(214, 180, 108, 0.11), transparent 48%),
+                linear-gradient(90deg, rgba(118, 180, 255, 0.06), transparent 72%);
+        }
+
+        .edge-energy-right {
+            right: 0;
+            background:
+                radial-gradient(ellipse at 100% 22%, rgba(214, 180, 108, 0.14), transparent 54%),
+                radial-gradient(ellipse at 76% 76%, rgba(118, 180, 255, 0.13), transparent 48%),
+                linear-gradient(270deg, rgba(118, 180, 255, 0.06), transparent 72%);
+        }
+
+        .edge-energy svg {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 132%;
+            height: calc(100% + 180px);
+            overflow: visible;
+        }
+
+        .edge-energy-left svg {
+            left: -10%;
+        }
+
+        .edge-energy-right svg {
+            right: -10%;
+        }
+
+        .edge-bolt {
+            fill: none;
+            stroke: rgba(118, 180, 255, 0.42);
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+            filter:
+                drop-shadow(0 0 8px rgba(118, 180, 255, 0.42))
+                drop-shadow(0 0 18px rgba(214, 180, 108, 0.16));
+        }
+
+        .edge-bolt.gold {
+            stroke: rgba(241, 210, 140, 0.32);
+        }
+
+        .edge-spark {
+            fill: rgba(241, 210, 140, 0.52);
+            opacity: 0;
+            filter: drop-shadow(0 0 8px rgba(241, 210, 140, 0.34));
+            transition: opacity 0.18s ease;
+        }
+
+        .edge-spark.is-live {
+            opacity: 1;
         }
 
         .scroll-storm {
@@ -1342,7 +1549,7 @@
             padding: 58px 0;
         }
 
-        #oferta {
+        #planos {
             margin-top: -1px;
             background: linear-gradient(180deg, #101720 0%, rgba(16, 23, 32, 0) 260px);
         }
@@ -1410,6 +1617,8 @@
             position: relative;
             overflow: hidden;
             min-height: 100%;
+            cursor: pointer;
+            transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
         }
 
         .offer-panel::before {
@@ -1427,10 +1636,22 @@
             opacity: 1;
         }
 
+        .offer-panel:hover {
+            transform: translateY(-4px) scale(1.015);
+            border-color: rgba(241, 210, 140, 0.5);
+            box-shadow:
+                0 30px 82px rgba(0, 0, 0, 0.42),
+                0 0 0 1px rgba(214, 180, 108, 0.12);
+        }
+
         .offer-panel.featured {
             border-color: rgba(214, 180, 108, 0.52);
             transform: translateY(-10px);
             box-shadow: 0 32px 92px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(214, 180, 108, 0.16);
+        }
+
+        .offer-panel.featured:hover {
+            transform: translateY(-10px) scale(1.015);
         }
 
         .offer-tag {
@@ -1478,6 +1699,120 @@
             align-items: stretch;
         }
 
+        #informacoes {
+            position: relative;
+            isolation: isolate;
+        }
+
+        #informacoes::before {
+            content: "";
+            position: absolute;
+            inset: 18px 0 auto;
+            z-index: -1;
+            height: 420px;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 24% 28%, rgba(214, 180, 108, 0.09), transparent 42%),
+                radial-gradient(ellipse at 78% 18%, rgba(118, 180, 255, 0.08), transparent 38%);
+            filter: blur(18px);
+            opacity: 0.82;
+        }
+
+        #informacoes .section-header {
+            position: relative;
+        }
+
+        #informacoes .section-header::after {
+            content: "";
+            display: block;
+            width: min(420px, 78vw);
+            height: 1px;
+            margin-top: 22px;
+            background: linear-gradient(90deg, rgba(241, 210, 140, 0.54), rgba(118, 180, 255, 0.24), transparent);
+        }
+
+        #informacoes .rules-panel,
+        #informacoes .schedule-panel {
+            position: relative;
+            overflow: hidden;
+            border-color: rgba(255, 255, 255, 0.12);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.024)),
+                rgba(11, 17, 26, 0.86);
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.32),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        #informacoes .rules-panel::before,
+        #informacoes .schedule-panel::before {
+            content: "";
+            position: absolute;
+            left: 24px;
+            right: 24px;
+            top: 0;
+            height: 1px;
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(241, 210, 140, 0.56), transparent);
+        }
+
+        #informacoes .rules-panel h3,
+        #informacoes .schedule-panel h3 {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff1c8;
+        }
+
+        #informacoes .rules-panel h3::before,
+        #informacoes .schedule-panel h3::before {
+            content: "";
+            width: 7px;
+            height: 22px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, var(--color-gold-strong), rgba(118, 180, 255, 0.74));
+            box-shadow: 0 0 18px rgba(214, 180, 108, 0.18);
+        }
+
+        #informacoes .rules-list {
+            counter-reset: info-rule;
+        }
+
+        #informacoes .rules-list li {
+            min-height: 54px;
+            display: flex;
+            align-items: center;
+            padding-left: 54px;
+            border-color: rgba(255, 255, 255, 0.075);
+            background:
+                linear-gradient(90deg, rgba(241, 210, 140, 0.055), transparent 58%),
+                rgba(255, 255, 255, 0.035);
+        }
+
+        #informacoes .rules-list li::before {
+            content: counter(info-rule, decimal-leading-zero);
+            counter-increment: info-rule;
+            left: 14px;
+            top: 50%;
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            transform: translateY(-50%);
+            color: #171005;
+            background: linear-gradient(135deg, var(--color-gold-strong), var(--color-gold));
+            box-shadow: 0 0 18px rgba(214, 180, 108, 0.18);
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        #informacoes .ui-chip {
+            border-color: rgba(118, 180, 255, 0.18);
+            background:
+                linear-gradient(135deg, rgba(118, 180, 255, 0.09), rgba(255, 255, 255, 0.035));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
         .testimonial-panel {
             min-height: 220px;
             border-color: rgba(214, 180, 108, 0.28);
@@ -1509,6 +1844,127 @@
             border-color: rgba(214, 180, 108, 0.28);
         }
 
+        #lead-form .contact-grid {
+            align-items: stretch;
+            gap: 28px;
+        }
+
+        .contact-invite,
+        .form-panel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-invite {
+            min-height: 100%;
+            border-color: rgba(241, 210, 140, 0.42);
+            background:
+                radial-gradient(circle at 18% 14%, rgba(241, 210, 140, 0.2), transparent 30%),
+                radial-gradient(circle at 84% 28%, rgba(118, 180, 255, 0.18), transparent 34%),
+                linear-gradient(160deg, rgba(214, 180, 108, 0.11), rgba(255, 255, 255, 0.035) 42%, rgba(79, 119, 185, 0.08)),
+                rgba(11, 17, 26, 0.9);
+            box-shadow:
+                0 32px 92px rgba(0, 0, 0, 0.42),
+                inset 0 1px 0 rgba(255, 237, 190, 0.14);
+        }
+
+        .contact-invite::before,
+        .contact-invite::after,
+        .form-panel::before {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .contact-invite::before {
+            inset: 16px;
+            border: 1px solid rgba(241, 210, 140, 0.14);
+            border-radius: 18px;
+            mask-image: linear-gradient(135deg, #000 0 34%, transparent 58%, #000 100%);
+        }
+
+        .contact-invite > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-highlight {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .contact-stat {
+            min-height: 78px;
+            display: grid;
+            align-content: center;
+            gap: 4px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.052);
+        }
+
+        .contact-stat strong {
+            color: var(--color-gold-strong);
+            font-family: var(--font-display);
+            font-size: 1.28rem;
+            line-height: 1;
+        }
+
+        .contact-stat span {
+            color: var(--color-text-soft);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .contact-note {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 22px;
+            padding: 12px 14px;
+            border: 1px solid rgba(118, 180, 255, 0.22);
+            border-radius: 14px;
+            color: #dceaff;
+            background: rgba(79, 119, 185, 0.1);
+            font-weight: 700;
+        }
+
+        .contact-note::before {
+            content: "";
+            width: 9px;
+            height: 9px;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            background: var(--color-blue-strong);
+            box-shadow: 0 0 16px rgba(118, 180, 255, 0.78);
+        }
+
+        .form-panel {
+            background:
+                linear-gradient(180deg, rgba(241, 210, 140, 0.09), rgba(255, 255, 255, 0.032)),
+                rgba(7, 12, 20, 0.9);
+            box-shadow:
+                0 32px 92px rgba(0, 0, 0, 0.42),
+                0 0 0 1px rgba(214, 180, 108, 0.1);
+        }
+
+        .form-panel::before {
+            left: 24px;
+            right: 24px;
+            top: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(241, 210, 140, 0.86), rgba(118, 180, 255, 0.58), transparent);
+        }
+
+        .form-panel h3 {
+            color: #fff2c8;
+            text-shadow: 0 0 18px rgba(214, 180, 108, 0.18);
+        }
+
         .field label {
             color: #dce3ee;
             font-weight: 700;
@@ -1531,6 +1987,12 @@
 
         .community-grid {
             grid-template-columns: repeat(4, 1fr);
+        }
+
+        .community-link.discord {
+            border-color: rgba(88, 101, 242, 0.42);
+            background:
+                linear-gradient(135deg, rgba(88, 101, 242, 0.14), rgba(255, 255, 255, 0.04));
         }
 
         .community-link {
@@ -1766,6 +2228,7 @@
             .community-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
         }
 
         @media (max-width: 760px) {
@@ -1849,6 +2312,10 @@
                 left: -130%;
             }
 
+            .edge-energy {
+                display: none;
+            }
+
             .hero-effects {
                 max-width: 100vw;
             }
@@ -1870,11 +2337,32 @@
             .offer-panel.featured {
                 transform: none;
             }
+
         }
     </style>
 </head>
 <body>
     <div class="cursor-aura" aria-hidden="true"></div>
+    <div class="edge-energy edge-energy-left" aria-hidden="true">
+        <svg viewBox="0 0 260 1200" preserveAspectRatio="none" focusable="false">
+            <path class="edge-bolt" data-edge-path data-edge-duration="1" d="M86 -80 L58 88 L96 214 L48 348 L82 486 L42 632 L74 760 L48 914 L92 1048 L60 1280"/>
+            <path class="edge-bolt gold" data-edge-path data-edge-delay="0.18" data-edge-duration="0.36" d="M120 80 L78 210 L112 312 L88 470"/>
+            <path class="edge-bolt" data-edge-path data-edge-delay="0.52" data-edge-duration="0.28" d="M46 610 L126 688 L94 780 L150 900"/>
+            <circle class="edge-spark" data-edge-spark="0.2" cx="96" cy="214" r="2.4"/>
+            <circle class="edge-spark" data-edge-spark="0.58" cx="74" cy="760" r="2"/>
+            <circle class="edge-spark" data-edge-spark="0.82" cx="92" cy="1048" r="2.2"/>
+        </svg>
+    </div>
+    <div class="edge-energy edge-energy-right" aria-hidden="true">
+        <svg viewBox="0 0 260 1200" preserveAspectRatio="none" focusable="false">
+            <path class="edge-bolt" data-edge-path data-edge-duration="1" d="M208 -120 L182 70 L224 188 L194 344 L232 478 L170 624 L208 742 L154 908 L190 1034 L132 1320"/>
+            <path class="edge-bolt gold" data-edge-path data-edge-delay="0.12" data-edge-duration="0.38" d="M164 36 L220 150 L186 256 L226 366 L198 514"/>
+            <path class="edge-bolt" data-edge-path data-edge-delay="0.54" data-edge-duration="0.3" d="M174 624 L118 720 L152 798 L92 930 L126 1042"/>
+            <circle class="edge-spark" data-edge-spark="0.18" cx="224" cy="188" r="2.4"/>
+            <circle class="edge-spark" data-edge-spark="0.56" cx="170" cy="624" r="2"/>
+            <circle class="edge-spark" data-edge-spark="0.84" cx="190" cy="1034" r="2.2"/>
+        </svg>
+    </div>
     <div class="scroll-storm" aria-hidden="true">
         <svg viewBox="0 0 1000 3200" preserveAspectRatio="none">
             <defs>
@@ -1970,7 +2458,7 @@
             </div>
         </section>
 
-        <section id="oferta">
+        <section id="planos">
             <div class="container">
                 <div class="section-header">
                     <div class="eyebrow" data-i18n="offer.eyebrow">Oferta</div>
@@ -1985,8 +2473,8 @@
                     Vagas limitadas. O coaching é destinado a jogadores com elo mínimo de 1100+.
                 </div>
 
-                <div class="card-grid pricing-grid" id="planos" style="margin-top: 22px;">
-                    <article class="card offer-panel">
+                <div class="card-grid pricing-grid" style="margin-top: 22px;">
+                    <article class="card offer-panel" data-plan-card="avulso-1h" tabindex="0" role="link">
                         <div class="offer-tag" data-i18n="plan.single.tag">Avulso</div>
                         <h3 data-i18n="plan.single.title">1 hora</h3>
                         <div class="price">R$ 100</div>
@@ -1996,10 +2484,10 @@
                             <li data-i18n="plan.single.item2">Análise específica do seu momento</li>
                             <li data-i18n="plan.single.item3">Ideal para dúvida, ajuste ou direcionamento rápido</li>
                         </ul>
-                        <a class="btn btn-secondary" href="#lead-form" data-i18n="plan.single.cta">Quero esse</a>
+                        <a class="btn btn-secondary" href="#lead-form" data-plan="avulso-1h" data-i18n="plan.single.cta">Quero esse</a>
                     </article>
 
-                    <article class="card offer-panel featured">
+                    <article class="card offer-panel featured" data-plan-card="pacote-6h" tabindex="0" role="link">
                         <div class="offer-tag" data-i18n="plan.mid.tag">Mais escolhido</div>
                         <h3 data-i18n="plan.mid.title">6 horas</h3>
                         <div class="price">R$ 425</div>
@@ -2009,10 +2497,10 @@
                             <li data-i18n="plan.mid.item2">Validade de 60 dias</li>
                             <li data-i18n="plan.mid.item3">Espaço suficiente para correção e acompanhamento</li>
                         </ul>
-                        <a class="btn btn-primary" href="#lead-form" data-i18n="plan.mid.cta">Tenho interesse</a>
+                        <a class="btn btn-primary" href="#lead-form" data-plan="pacote-6h" data-i18n="plan.mid.cta">Tenho interesse</a>
                     </article>
 
-                    <article class="card offer-panel">
+                    <article class="card offer-panel" data-plan-card="pacote-12h" tabindex="0" role="link">
                         <div class="offer-tag" data-i18n="plan.full.tag">Intensivo</div>
                         <h3 data-i18n="plan.full.title">12 horas</h3>
                         <div class="price">R$ 700</div>
@@ -2022,7 +2510,7 @@
                             <li data-i18n="plan.full.item2">Validade de 120 dias</li>
                             <li data-i18n="plan.full.item3">Pacote pensado para evolução mais completa</li>
                         </ul>
-                        <a class="btn btn-secondary" href="#lead-form" data-i18n="plan.full.cta">Entrar na fila</a>
+                        <a class="btn btn-secondary" href="#lead-form" data-plan="pacote-12h" data-i18n="plan.full.cta">Entrar na fila</a>
                     </article>
                 </div>
             </div>
@@ -2112,65 +2600,85 @@
 
         <section id="lead-form">
             <div class="container card-grid contact-grid">
-                <article class="card rules-panel" id="contato">
+                <article class="card rules-panel contact-invite" id="contato">
                     <div class="eyebrow" data-i18n="contact.eyebrow">Contato</div>
                     <h2 class="section-title" data-i18n="contact.title">Quero evoluir no AOM com o mosca</h2>
                     <p data-i18n="contact.copy">
                         Preencha os dados para registrar seu perfil. Vamos criar o melhor plano
                         com base em seu estilo e elo.
                     </p>
+                    <div class="contact-highlight" aria-label="Resumo do coaching">
+                        <div class="contact-stat">
+                            <strong>1100+</strong>
+                            <span data-i18n="contact.stat1">rating mínimo</span>
+                        </div>
+                        <div class="contact-stat">
+                            <strong data-i18n="contact.stat2Value">1 hora</strong>
+                            <span data-i18n="contact.stat2">sessões individuais</span>
+                        </div>
+                        <div class="contact-stat">
+                            <strong>60-120</strong>
+                            <span data-i18n="contact.stat3">dias de validade</span>
+                        </div>
+                    </div>
                     <ul class="rules-list">
                         <li data-i18n="contact.item1">Atendimento individual conforme disponibilidade do coach.</li>
-                        <li data-i18n="contact.item2">Contato feito pelo WhatsApp informado no formulário. Discord disponível</li>
-                        <li data-i18n="contact.item3">O formulário envia os dados apenas para a API configurada, sem armazenar leads no navegador.</li>
+                        <li data-i18n="contact.item2">Contato feito pelo WhatsApp informado no formulário.</li>
+                        <li data-i18n="contact.item3">Após o cadastro, montaremos o melhor plano para seu perfil como player.</li>
                     </ul>
+                    <div class="contact-note" data-i18n="contact.note">Informe seu elo e objetivo para facilitar o diagnóstico inicial.</div>
                 </article>
 
                 <article class="card form-panel">
                     <h3 data-i18n="form.title">Formulário de interesse</h3>
-                    <form id="leadForm" name="lead-mosca" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <form id="leadForm" name="lead-mosca" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" novalidate>
                         <input type="hidden" name="form-name" value="lead-mosca">
                         <input type="hidden" name="coach" value="Mosca">
-                        <input type="hidden" name="idioma" id="idioma">
                         <input type="hidden" name="data" id="dataEnvio">
                         <p style="display: none;">
                             <label>Não preencha este campo: <input name="bot-field"></label>
                         </p>
-                        <div class="field">
+                        <div class="field" data-field="nome">
                             <label for="nome" data-i18n="form.name">Seu nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="Ex: Rafael Silva" data-i18n-placeholder="form.namePlaceholder" autocomplete="name" maxlength="80" required>
+                            <input type="text" id="nome" name="nome" placeholder="Ex: Rafael Silva" data-i18n-placeholder="form.namePlaceholder" autocomplete="name" maxlength="80" required aria-describedby="nomeError">
+                            <span class="field-error" id="nomeError" aria-live="polite"></span>
                         </div>
 
-                        <div class="field">
+                        <div class="field" data-field="whatsapp">
                             <label for="whatsapp" data-i18n="form.whatsapp">Seu WhatsApp</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(DDD) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" maxlength="20" required>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(DDD) 9XXXX-XXXX" autocomplete="tel" inputmode="tel" maxlength="24" required aria-describedby="whatsappError">
+                            <span class="field-error" id="whatsappError" aria-live="polite"></span>
                         </div>
 
-                        <div class="field">
+                        <div class="field" data-field="elo">
                             <label for="elo" data-i18n="form.elo">Seu elo atual</label>
-                            <input type="number" id="elo" name="elo" placeholder="Ex: 1135" min="1100" max="3000" required>
+                            <input type="number" id="elo" name="elo" placeholder="Ex: 1135" min="1100" max="3000" step="50" required aria-describedby="eloError">
+                            <span class="field-error" id="eloError" aria-live="polite"></span>
                         </div>
 
-                        <div class="field">
+                        <div class="field" data-field="plano">
                             <label for="plano" data-i18n="form.plan">Plano de interesse</label>
-                            <select id="plano" name="plano" required>
+                            <select id="plano" name="plano" required aria-describedby="planoError">
                                 <option value="" data-i18n="form.planPlaceholder">Selecione um plano</option>
                                 <option value="avulso-1h" data-i18n="form.planSingle">Avulso (1h) - R$ 100</option>
                                 <option value="pacote-6h" data-i18n="form.planMid">Pacote 6h - R$ 425</option>
                                 <option value="pacote-12h" data-i18n="form.planFull">Pacote 12h - R$ 700</option>
                             </select>
+                            <span class="field-error" id="planoError" aria-live="polite"></span>
                         </div>
 
-                        <div class="field">
+                        <div class="field" data-field="objetivo">
                             <label for="objetivo" data-i18n="form.goal">O que você quer melhorar?</label>
-                            <textarea id="objetivo" name="objetivo" rows="4" maxlength="800" placeholder="Matchups, macro, tomada de decisão, build order..." data-i18n-placeholder="form.goalPlaceholder" required></textarea>
+                            <textarea id="objetivo" name="objetivo" rows="4" maxlength="800" placeholder="Matchups, macro, tomada de decisão, build order..." data-i18n-placeholder="form.goalPlaceholder" required aria-describedby="objetivoError objetivoCounter"></textarea>
+                            <span class="field-error" id="objetivoError" aria-live="polite"></span>
+                            <span class="form-meta" id="objetivoCounter">0/800</span>
                         </div>
 
-                        <div class="loading" id="loadingMessage" data-i18n="form.loading">Enviando seu interesse...</div>
-                        <div class="success-message" id="successMessage">
+                        <div class="loading" id="loadingMessage" role="status" aria-live="polite" data-i18n="form.loading">Enviando seu interesse...</div>
+                        <div class="success-message" id="successMessage" role="status" aria-live="polite">
                             <span data-i18n="form.success">Cadastro enviado com sucesso. O lead foi salvo e a equipe pode seguir com o contato.</span>
                         </div>
-                        <div class="error-message" id="errorMessage">
+                        <div class="error-message" id="errorMessage" role="alert" aria-live="assertive">
                             <span data-i18n="form.serverError">O servidor não respondeu agora. Revise a conexão e tente novamente.</span>
                         </div>
 
@@ -2184,9 +2692,9 @@
             <div class="container">
                 <article class="community-card">
                     <div class="community-top">
-                        <img class="mosca-logo" src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo do Mosca">
+                        <img class="mosca-logo" src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo do Mosca" loading="lazy" decoding="async">
                         <div>
-                            <div class="eyebrow" data-i18n="community.eyebrow">Comunidade</div>
+                            <div class="eyebrow" data-i18n="community.eyebrow">Redes oficiais</div>
                             <h3 data-i18n="community.title">Comunidade do Mosca</h3>
                         </div>
                     </div>
@@ -2195,20 +2703,20 @@
                             Acompanhe o Mosca nas plataformas principais e entre no Discord para participar da comunidade.
                         </p>
                         <div class="community-grid">
-                            <a class="community-link" href="https://discord.gg/9V3UsxMep" target="_blank" rel="noopener noreferrer">
-                                <img src="IMAGENS/discord-white-icon.png" alt="Discord">
+                            <a class="community-link discord" href="https://discord.gg/9V3UsxMep" target="_blank" rel="noopener noreferrer">
+                                <img src="IMAGENS/discord-white-icon.png" alt="" loading="lazy" decoding="async" aria-hidden="true">
                                 <span>Discord</span>
                             </a>
-                            <a class="community-link" href="https://liquipedia.net/ageofempires/Mosca" target="_blank" rel="noopener noreferrer">
-                                <img src="IMAGENS/luquipedia%20logo%202017.png" alt="Liquipedia">
+                            <a class="community-link liquipedia" href="https://liquipedia.net/ageofempires/Mosca" target="_blank" rel="noopener noreferrer">
+                                <img src="IMAGENS/luquipedia%20logo%202017.png" alt="" loading="lazy" decoding="async" aria-hidden="true">
                                 <span>Liquipedia</span>
                             </a>
-                            <a class="community-link" href="https://www.twitch.tv/xmosca" target="_blank" rel="noopener noreferrer">
-                                <img src="IMAGENS/twitch-white-icon.png" alt="Twitch">
+                            <a class="community-link twitch" href="https://www.twitch.tv/xmosca" target="_blank" rel="noopener noreferrer">
+                                <img src="IMAGENS/twitch-white-icon.png" alt="" loading="lazy" decoding="async" aria-hidden="true">
                                 <span>Twitch</span>
                             </a>
-                            <a class="community-link" href="https://www.youtube.com/@MoscaAoM" target="_blank" rel="noopener noreferrer">
-                                <img src="IMAGENS/youtube.png" alt="YouTube">
+                            <a class="community-link youtube" href="https://www.youtube.com/@MoscaAoM" target="_blank" rel="noopener noreferrer">
+                                <img src="IMAGENS/simbolo-do-youtube-white.png" alt="" loading="lazy" decoding="async" aria-hidden="true">
                                 <span>YouTube</span>
                             </a>
                         </div>
@@ -2216,6 +2724,7 @@
                 </article>
             </div>
         </section>
+
     </main>
 
     <footer class="site-footer">
@@ -2224,7 +2733,7 @@
                 <div>
                     <div class="brand">
                         <span class="brand-mark">
-                            <img src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo Mosca">
+                            <img src="IMAGENS/LOGO%20MOSCA.jpg" alt="Logo Mosca" loading="lazy" decoding="async">
                         </span>
                         <span>Coach do Mosca</span>
                     </div>
@@ -2257,7 +2766,6 @@
     </footer>
 
     <script>
-        const MOSCA_WHATSAPP_NUMBER = "5511988750843";
         const translations = {
             pt: {
                 "nav.home": "Início",
@@ -2329,9 +2837,14 @@
                 "contact.eyebrow": "Contato",
                 "contact.title": "Entrar na fila do Coach do Mosca",
                 "contact.copy": "Preencha os dados para registrar seu interesse. O elo ajuda a confirmar o requisito mínimo e o objetivo orienta o primeiro contato.",
+                "contact.stat1": "rating mínimo",
+                "contact.stat2Value": "1 hora",
+                "contact.stat2": "sessões individuais",
+                "contact.stat3": "dias de validade",
                 "contact.item1": "Atendimento individual conforme disponibilidade do coach.",
                 "contact.item2": "Contato feito pelo WhatsApp informado no formulário.",
                 "contact.item3": "O formulário envia os dados apenas para a API configurada, sem armazenar leads no navegador.",
+                "contact.note": "Informe seu elo e objetivo para facilitar o diagnóstico inicial.",
                 "form.title": "Formulário de interesse",
                 "form.name": "Seu nome",
                 "form.namePlaceholder": "Ex: Rafael Silva",
@@ -2345,11 +2858,16 @@
                 "form.goal": "O que você quer melhorar?",
                 "form.goalPlaceholder": "Matchups, macro, tomada de decisão, build order...",
                 "form.loading": "Enviando seu interesse...",
-                "form.success": "Cadastro salvo no Netlify. O WhatsApp do Mosca foi aberto com a mensagem preenchida.",
-                "form.serverError": "Não foi possível salvar o cadastro agora. Revise a conexão e tente novamente.",
+                "form.success": "Cadastro enviado com sucesso. A equipe pode seguir com o contato pelo WhatsApp informado.",
+                "form.serverError": "Não foi possível salvar o cadastro agora. Seus dados continuam no formulário para tentar novamente.",
+                "form.requiredError": "Preencha este campo para continuar.",
                 "form.eloError": "O coaching do Mosca exige elo mínimo de 1100+. Revise esse campo antes de enviar.",
+                "form.eloMaxError": "Informe um elo até 3000.",
+                "form.whatsappError": "Informe um WhatsApp com 10 a 15 dígitos.",
+                "form.planError": "Escolha um dos planos disponíveis.",
+                "form.goalLengthError": "Descreva seu objetivo com até 800 caracteres.",
                 "form.submit": "Quero entrar",
-                "community.eyebrow": "Comunidade",
+                "community.eyebrow": "Redes oficiais",
                 "community.title": "Comunidade do Mosca",
                 "community.copy": "Acompanhe o Mosca nas plataformas principais e entre no Discord para participar da comunidade.",
                 "footer.copy": "Coaching de Age of Mythology com posicionamento competitivo, identidade premium e foco em jogadores 1100+.",
@@ -2430,9 +2948,14 @@
                 "contact.eyebrow": "Contact",
                 "contact.title": "Join the Mosca Coaching waitlist",
                 "contact.copy": "Fill in your details to register your interest. Your rating confirms the minimum requirement, and your goal helps guide the first contact.",
+                "contact.stat1": "minimum rating",
+                "contact.stat2Value": "1 hour",
+                "contact.stat2": "private sessions",
+                "contact.stat3": "days of validity",
                 "contact.item1": "Private coaching based on the coach's availability.",
                 "contact.item2": "Contact will be made through the WhatsApp number provided in the form.",
                 "contact.item3": "The form sends data only to the configured API and does not store leads in the browser.",
+                "contact.note": "Share your rating and goal to make the initial diagnosis easier.",
                 "form.title": "Interest form",
                 "form.name": "Your name",
                 "form.namePlaceholder": "Ex: Rafael Silva",
@@ -2446,11 +2969,16 @@
                 "form.goal": "What do you want to improve?",
                 "form.goalPlaceholder": "Matchups, macro, decision-making, build order...",
                 "form.loading": "Sending your interest...",
-                "form.success": "Registration saved on Netlify. Mosca's WhatsApp was opened with the message filled in.",
-                "form.serverError": "Could not save the registration right now. Check the connection and try again.",
+                "form.success": "Registration sent successfully. The team can follow up through the WhatsApp number provided.",
+                "form.serverError": "Could not save the registration right now. Your data remains in the form so you can try again.",
+                "form.requiredError": "Fill in this field to continue.",
                 "form.eloError": "Mosca Coaching requires a minimum 1100+ rating. Please review this field before submitting.",
+                "form.eloMaxError": "Enter a rating up to 3000.",
+                "form.whatsappError": "Enter a WhatsApp number with 10 to 15 digits.",
+                "form.planError": "Choose one of the available plans.",
+                "form.goalLengthError": "Describe your goal in up to 800 characters.",
                 "form.submit": "Join now",
-                "community.eyebrow": "Community",
+                "community.eyebrow": "Official links",
                 "community.title": "Mosca Community",
                 "community.copy": "Follow Mosca on the main platforms and join Discord to take part in the community.",
                 "footer.copy": "Age of Mythology coaching with competitive positioning, premium identity, and a focus on 1100+ players.",
@@ -2471,9 +2999,12 @@
         const loadingMessage = document.getElementById("loadingMessage");
         const successMessage = document.getElementById("successMessage");
         const errorMessage = document.getElementById("errorMessage");
+        const objetivoInput = document.getElementById("objetivo");
+        const objetivoCounter = document.getElementById("objetivoCounter");
         const languageToggle = document.getElementById("languageToggle");
         const languageWidget = document.getElementById("languageWidget");
         const languageMenu = document.getElementById("languageMenu");
+        const validPlans = new Set(["avulso-1h", "pacote-6h", "pacote-12h"]);
 
         function t(key) {
             return translations[currentLang][key] || translations.pt[key] || key;
@@ -2517,34 +3048,26 @@
 
         leadForm.addEventListener("submit", async function (event) {
             event.preventDefault();
-            toggleStatus("loading");
+            clearFieldErrors();
 
-            const elo = Number(document.getElementById("elo").value);
+            const formData = getLeadPayload();
+            const errors = validateLeadPayload(formData);
 
-            if (elo < 1100) {
+            if (Object.keys(errors).length > 0) {
+                showFieldErrors(errors);
                 toggleStatus("error");
-                errorMessage.textContent = t("form.eloError");
+                errorMessage.textContent = Object.values(errors)[0];
                 return;
             }
 
-            const formData = {
-                coach: "Mosca",
-                nome: document.getElementById("nome").value.trim(),
-                whatsapp: document.getElementById("whatsapp").value.replace(/\D/g, ""),
-                elo: elo,
-                plano: document.getElementById("plano").value,
-                objetivo: document.getElementById("objetivo").value.trim(),
-                idioma: currentLang.toUpperCase(),
-                data: new Date().toLocaleString("pt-BR")
-            };
+            toggleStatus("loading");
 
             try {
-                document.getElementById("idioma").value = formData.idioma;
                 document.getElementById("dataEnvio").value = formData.data;
-                await enviarParaNetlify(formData);
-                abrirWhatsAppMosca(formData);
+                await enviarLead(formData);
                 toggleStatus("success");
                 leadForm.reset();
+                updateGoalCounter();
             } catch (error) {
                 toggleStatus("error");
                 errorMessage.textContent = t("form.serverError");
@@ -2552,7 +3075,49 @@
             }
         });
 
-        async function enviarParaNetlify(dados) {
+        function getLeadPayload() {
+            return {
+                coach: "Mosca",
+                nome: document.getElementById("nome").value.trim(),
+                whatsapp: document.getElementById("whatsapp").value.replace(/\D/g, ""),
+                elo: Number(document.getElementById("elo").value),
+                plano: document.getElementById("plano").value,
+                objetivo: objetivoInput.value.trim(),
+                data: new Date().toISOString()
+            };
+        }
+
+        function validateLeadPayload(dados) {
+            const errors = {};
+
+            if (!dados.nome) {
+                errors.nome = t("form.requiredError");
+            }
+
+            if (!/^\d{10,15}$/.test(dados.whatsapp)) {
+                errors.whatsapp = t("form.whatsappError");
+            }
+
+            if (!Number.isInteger(dados.elo) || dados.elo < 1100) {
+                errors.elo = t("form.eloError");
+            } else if (dados.elo > 3000) {
+                errors.elo = t("form.eloMaxError");
+            }
+
+            if (!validPlans.has(dados.plano)) {
+                errors.plano = t("form.planError");
+            }
+
+            if (!dados.objetivo) {
+                errors.objetivo = t("form.requiredError");
+            } else if (dados.objetivo.length > 800) {
+                errors.objetivo = t("form.goalLengthError");
+            }
+
+            return errors;
+        }
+
+        async function enviarLead(dados) {
             const payload = new URLSearchParams({
                 "form-name": "lead-mosca",
                 coach: dados.coach,
@@ -2561,8 +3126,8 @@
                 elo: String(dados.elo),
                 plano: dados.plano,
                 objetivo: dados.objetivo,
-                idioma: dados.idioma,
-                data: dados.data
+                data: dados.data,
+                "bot-field": ""
             });
 
             const response = await fetch("/", {
@@ -2580,33 +3145,36 @@
             return response;
         }
 
-        function abrirWhatsAppMosca(dados) {
-            const planoSelecionado = document.getElementById("plano").selectedOptions[0]?.textContent || dados.plano;
-            const mensagem = currentLang === "en"
-                ? [
-                    "I'm interested in Mosca Coaching",
-                    "",
-                    `Name: ${dados.nome}`,
-                    `WhatsApp: ${dados.whatsapp}`,
-                    `Current rating: ${dados.elo}`,
-                    `Plan of interest: ${planoSelecionado}`,
-                    `Goal: ${dados.objetivo}`,
-                    `Site language: ${currentLang.toUpperCase()}`,
-                    `Date: ${dados.data}`
-                ].join("\n")
-                : [
-                    "Estou interessado no Coach do Mosca",
-                    "",
-                    `Nome: ${dados.nome}`,
-                    `WhatsApp: ${dados.whatsapp}`,
-                    `Elo atual: ${dados.elo}`,
-                    `Plano de interesse: ${planoSelecionado}`,
-                    `Objetivo: ${dados.objetivo}`,
-                    `Idioma do site: ${currentLang.toUpperCase()}`,
-                    `Data: ${dados.data}`
-                ].join("\n");
-            const whatsappUrl = `https://wa.me/${MOSCA_WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
-            window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+        function clearFieldErrors() {
+            leadForm.querySelectorAll(".field.has-error").forEach((field) => field.classList.remove("has-error"));
+            leadForm.querySelectorAll(".field-error").forEach((message) => {
+                message.textContent = "";
+            });
+        }
+
+        function showFieldErrors(errors) {
+            Object.entries(errors).forEach(([fieldName, message]) => {
+                const field = leadForm.querySelector(`[data-field="${fieldName}"]`);
+                const messageElement = document.getElementById(`${fieldName}Error`);
+                const control = field?.querySelector("input, select, textarea");
+
+                if (field) {
+                    field.classList.add("has-error");
+                }
+
+                if (messageElement) {
+                    messageElement.textContent = message;
+                }
+
+                if (control && fieldName === Object.keys(errors)[0]) {
+                    control.focus();
+                }
+            });
+        }
+
+        function updateGoalCounter() {
+            if (!objetivoInput || !objetivoCounter) return;
+            objetivoCounter.textContent = `${objetivoInput.value.length}/800`;
         }
 
         function toggleStatus(type) {
@@ -2614,7 +3182,7 @@
             successMessage.style.display = type === "success" ? "block" : "none";
             errorMessage.style.display = type === "error" ? "block" : "none";
             submitButton.disabled = type === "loading";
-            submitButton.style.opacity = type === "loading" ? "0.72" : "1";
+            submitButton.setAttribute("aria-busy", String(type === "loading"));
         }
 
         function renderHeroTitle(text) {
@@ -2695,6 +3263,8 @@
         }
 
         function initPremiumEffects() {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
             const effectsLayer = document.querySelector(".hero-effects");
 
             if (effectsLayer) {
@@ -2744,6 +3314,8 @@
         }
 
         function initScrollStorm() {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
             const storm = document.querySelector(".scroll-storm");
             const mainPath = document.getElementById("stormMainPath");
             const glowPath = document.querySelector(".storm-main-glow");
@@ -2825,11 +3397,70 @@
             });
         }
 
+        function initEdgeEnergy() {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            if (window.matchMedia("(max-width: 760px)").matches) return;
+
+            const paths = document.querySelectorAll("[data-edge-path]");
+            const sparks = document.querySelectorAll("[data-edge-spark]");
+            const contact = document.getElementById("lead-form");
+            if (!paths.length) return;
+
+            const pathData = Array.from(paths).map((path) => {
+                const length = path.getTotalLength();
+                path.style.strokeDasharray = length;
+                path.style.strokeDashoffset = length;
+                return {
+                    delay: Number(path.dataset.edgeDelay || 0),
+                    duration: Number(path.dataset.edgeDuration || 1),
+                    length,
+                    path
+                };
+            });
+
+            let ticking = false;
+            function clamp(value, min, max) {
+                return Math.min(Math.max(value, min), max);
+            }
+
+            function updateEdges() {
+                ticking = false;
+                const target = contact
+                    ? contact.offsetTop + (contact.offsetHeight * 0.18)
+                    : Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+                const drawPoint = window.scrollY + (window.innerHeight * 0.42);
+                const progress = clamp(drawPoint / Math.max(target, 1), 0, 1);
+
+                pathData.forEach(({ delay, duration, length, path }) => {
+                    const localProgress = clamp((progress - delay) / Math.max(duration, 0.01), 0, 1);
+                    path.style.strokeDashoffset = length * (1 - localProgress);
+                    path.style.opacity = 0.2 + (localProgress * 0.8);
+                });
+
+                sparks.forEach((spark) => {
+                    const sparkAt = Number(spark.dataset.edgeSpark || 0);
+                    spark.classList.toggle("is-live", progress >= sparkAt);
+                });
+            }
+
+            function requestEdgeUpdate() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(updateEdges);
+            }
+
+            updateEdges();
+            window.addEventListener("scroll", requestEdgeUpdate, { passive: true });
+            window.addEventListener("resize", requestEdgeUpdate);
+        }
+
         document.getElementById("whatsapp").addEventListener("input", function (event) {
-            let value = event.target.value.replace(/\D/g, "").slice(0, 11);
+            let value = event.target.value.replace(/\D/g, "").slice(0, 15);
 
             if (value.length > 0) {
-                if (value.length <= 2) {
+                if (value.length > 11) {
+                    value = "+" + value;
+                } else if (value.length <= 2) {
                     value = "(" + value;
                 } else if (value.length <= 7) {
                     value = "(" + value.slice(0, 2) + ") " + value.slice(2);
@@ -2839,6 +3470,44 @@
             }
 
             event.target.value = value;
+        });
+
+        if (objetivoInput) {
+            objetivoInput.addEventListener("input", updateGoalCounter);
+            updateGoalCounter();
+        }
+
+        document.querySelectorAll("[data-plan]").forEach((link) => {
+            link.addEventListener("click", () => {
+                const planSelect = document.getElementById("plano");
+                if (planSelect && validPlans.has(link.dataset.plan)) {
+                    planSelect.value = link.dataset.plan;
+                    planSelect.dispatchEvent(new Event("change", { bubbles: true }));
+                }
+            });
+        });
+
+        function selectPlanAndGoToForm(plan) {
+            const planSelect = document.getElementById("plano");
+            const leadSection = document.getElementById("lead-form");
+            if (!planSelect || !leadSection || !validPlans.has(plan)) return;
+
+            planSelect.value = plan;
+            planSelect.dispatchEvent(new Event("change", { bubbles: true }));
+            leadSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        document.querySelectorAll("[data-plan-card]").forEach((card) => {
+            card.addEventListener("click", (event) => {
+                if (event.target.closest("a, button, input, select, textarea")) return;
+                selectPlanAndGoToForm(card.dataset.planCard);
+            });
+
+            card.addEventListener("keydown", (event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                selectPlanAndGoToForm(card.dataset.planCard);
+            });
         });
 
         if (languageToggle) {
@@ -2871,6 +3540,7 @@
         initHeroTitleParticles();
         initPremiumEffects();
         initScrollStorm();
+        initEdgeEnergy();
     </script>
 </body>
 </html>

@@ -1,0 +1,33 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and lead exports
+*.db
+*.sqlite
+*.sqlite3
+leads*.csv
+leads*.json
+
+# Generated deploy output
+public/
+dist/
+
+# Runtime/cache artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.netlify/
+
+# Local/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large local media drafts
+*.mp4
+*.mov
+*.avi
+*.mkv

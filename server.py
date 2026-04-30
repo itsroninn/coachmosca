@@ -2,6 +2,10 @@ import json
 import sqlite3
 import csv
 import io
+import base64
+import binascii
+import os
+import re
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -12,6 +16,18 @@ BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "leads_mosca.db"
 HOST = "127.0.0.1"
 PORT = 5500
+MAX_BODY_BYTES = 32 * 1024
+ALLOWED_PLANS = {"avulso-1h", "pacote-6h", "pacote-12h"}
+BLOCKED_STATIC_SUFFIXES = {".db", ".py", ".md", ".txt", ".sqlite", ".sqlite3"}
+TEXT_LIMITS = {
+    "coach": 40,
+    "nome": 80,
+    "whatsapp": 20,
+    "plano": 20,
+    "objetivo": 800,
+    "data": 40,
+}
+SAFE_TEXT_RE = re.compile(r"^[\w\sÀ-ÿ.,:;!?()+/@#&'\"-]+$", re.UNICODE)
 
 
 def get_connection():
@@ -70,6 +86,91 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def end_headers(self):
+        self.send_security_headers()
+        super().end_headers()
+
+    def send_security_headers(self):
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "DENY")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()")
+        self.send_header(
+            "Content-Security-Policy",
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src https://fonts.gstatic.com; "
+            "img-src 'self' data:; "
+            "media-src 'self'; "
+            "connect-src 'self'; "
+            "form-action 'self'; "
+            "frame-ancestors 'none'; "
+            "base-uri 'self'"
+        )
+
+    def send_auth_required(self):
+        self.send_response(401)
+        self.send_header("WWW-Authenticate", 'Basic realm="Mosca Leads"')
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.end_headers()
+        self.wfile.write("Autenticacao obrigatoria.".encode("utf-8"))
+
+    def is_admin_authenticated(self):
+        user = os.environ.get("MOSCA_ADMIN_USER")
+        password = os.environ.get("MOSCA_ADMIN_PASSWORD")
+        if not user or not password:
+            return False
+
+        header = self.headers.get("Authorization", "")
+        if not header.startswith("Basic "):
+            return False
+
+        try:
+            decoded = base64.b64decode(header.split(" ", 1)[1], validate=True).decode("utf-8")
+            supplied_user, supplied_password = decoded.split(":", 1)
+        except (binascii.Error, ValueError, UnicodeDecodeError):
+            return False
+
+        return supplied_user == user and supplied_password == password
+
+    def require_admin(self):
+        if self.is_admin_authenticated():
+            return True
+        self.send_auth_required()
+        return False
+
+    def validate_same_origin(self):
+        origin = self.headers.get("Origin")
+        if not origin:
+            return True
+
+        allowed = {
+            f"http://{HOST}:{PORT}",
+            f"http://localhost:{PORT}",
+        }
+        return origin in allowed
+
+    def normalize_text(self, payload, field, required=True):
+        value = str(payload.get(field, "")).strip()
+        if required and not value:
+            raise ValueError(f"Campo obrigatorio ausente: {field}.")
+
+        limit = TEXT_LIMITS[field]
+        if len(value) > limit:
+            raise ValueError(f"Campo muito longo: {field}.")
+
+        if value and not SAFE_TEXT_RE.match(value):
+            raise ValueError(f"Campo contem caracteres invalidos: {field}.")
+
+        return value
+
+    def csv_safe(self, value):
+        text = "" if value is None else str(value)
+        if text.startswith(("=", "+", "-", "@", "\t", "\r")):
+            return "'" + text
+        return text
+
     def parse_filters(self, query):
         try:
             limit = int(query.get("limit", ["100"])[0])
@@ -78,7 +179,10 @@ class Handler(SimpleHTTPRequestHandler):
 
         limit = max(1, min(limit, 1000))
         plano = query.get("plano", [""])[0].strip()
+        if plano and plano not in ALLOWED_PLANS:
+            plano = ""
         busca = query.get("q", [""])[0].strip()
+        busca = busca[:80]
 
         try:
             min_elo = int(query.get("min_elo", ["0"])[0])
@@ -120,9 +224,17 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        requested_path = Path(parsed.path)
 
         if parsed.path == "/api/health":
             return self.send_json(200, {"ok": True})
+
+        if parsed.path in {"/painel_leads.html", "/api/leads", "/api/leads.csv"}:
+            if not self.require_admin():
+                return
+
+        if requested_path.suffix.lower() in BLOCKED_STATIC_SUFFIXES or any(part.startswith(".") for part in requested_path.parts):
+            return self.send_json(403, {"ok": False, "error": "Arquivo nao publicado."})
 
         if parsed.path == "/api/leads":
             query = parse_qs(parsed.query)
@@ -144,14 +256,14 @@ class Handler(SimpleHTTPRequestHandler):
                 writer.writerow(
                     [
                         item["id"],
-                        item["coach"],
-                        item["nome"],
-                        item["whatsapp"],
+                        self.csv_safe(item["coach"]),
+                        self.csv_safe(item["nome"]),
+                        self.csv_safe(item["whatsapp"]),
                         item["elo"],
-                        item["plano"],
+                        self.csv_safe(item["plano"]),
                         item["horas_avulsas"],
-                        item["objetivo"],
-                        item["data_cliente"],
+                        self.csv_safe(item["objetivo"]),
+                        self.csv_safe(item["data_cliente"]),
                         item["created_at"],
                     ]
                 )
@@ -165,48 +277,58 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path != "/api/leads":
             return self.send_json(404, {"ok": False, "error": "Endpoint nao encontrado."})
 
+        if not self.validate_same_origin():
+            return self.send_json(403, {"ok": False, "error": "Origem nao autorizada."})
+
         content_length = self.headers.get("Content-Length")
         if not content_length:
             return self.send_json(400, {"ok": False, "error": "Body ausente."})
 
         try:
-            raw = self.rfile.read(int(content_length))
+            content_length_int = int(content_length)
+        except ValueError:
+            return self.send_json(400, {"ok": False, "error": "Content-Length invalido."})
+
+        if content_length_int < 1 or content_length_int > MAX_BODY_BYTES:
+            return self.send_json(413, {"ok": False, "error": "Body excede o limite permitido."})
+
+        try:
+            raw = self.rfile.read(content_length_int)
             payload = json.loads(raw.decode("utf-8"))
         except (ValueError, json.JSONDecodeError):
             return self.send_json(400, {"ok": False, "error": "JSON invalido."})
 
-        required_fields = ["coach", "nome", "whatsapp", "elo", "plano", "objetivo"]
-        missing = [field for field in required_fields if not payload.get(field)]
-        if missing:
-            return self.send_json(
-                400,
-                {"ok": False, "error": f"Campos obrigatorios ausentes: {', '.join(missing)}"},
-            )
+        if not isinstance(payload, dict):
+            return self.send_json(400, {"ok": False, "error": "JSON deve ser um objeto."})
+
+        try:
+            coach = self.normalize_text(payload, "coach")
+            nome = self.normalize_text(payload, "nome")
+            whatsapp = self.normalize_text(payload, "whatsapp")
+            plano = self.normalize_text(payload, "plano")
+            objetivo = self.normalize_text(payload, "objetivo")
+            data_cliente = self.normalize_text(payload, "data", required=False)
+        except ValueError as exc:
+            return self.send_json(400, {"ok": False, "error": str(exc)})
 
         try:
             elo = int(payload["elo"])
-        except ValueError:
+        except (KeyError, TypeError, ValueError):
             return self.send_json(400, {"ok": False, "error": "Elo invalido."})
 
-        if elo < 1100:
+        if elo < 1100 or elo > 3000:
             return self.send_json(
-                400, {"ok": False, "error": "O coaching exige elo minimo de 1100."}
+                400, {"ok": False, "error": "Elo deve ficar entre 1100 e 3000."}
             )
 
-        plano = str(payload.get("plano", "")).strip()
-        horas_avulsas = payload.get("horas_avulsas")
+        if plano not in ALLOWED_PLANS:
+            return self.send_json(400, {"ok": False, "error": "Plano invalido."})
 
-        if plano == "avulso":
-            try:
-                horas_avulsas = int(horas_avulsas)
-            except (TypeError, ValueError):
-                return self.send_json(
-                    400, {"ok": False, "error": "Informe uma quantidade valida de horas avulsas."}
-                )
-            if horas_avulsas < 1 or horas_avulsas > 20:
-                return self.send_json(
-                    400, {"ok": False, "error": "Horas avulsas devem ficar entre 1 e 20."}
-                )
+        if not re.fullmatch(r"\d{10,15}", whatsapp):
+            return self.send_json(400, {"ok": False, "error": "WhatsApp invalido."})
+
+        if plano == "avulso-1h":
+            horas_avulsas = 1
         else:
             horas_avulsas = None
 
@@ -219,14 +341,14 @@ class Handler(SimpleHTTPRequestHandler):
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    str(payload.get("coach", "")).strip(),
-                    str(payload.get("nome", "")).strip(),
-                    str(payload.get("whatsapp", "")).strip(),
+                    coach,
+                    nome,
+                    whatsapp,
                     elo,
                     plano,
                     horas_avulsas,
-                    str(payload.get("objetivo", "")).strip(),
-                    str(payload.get("data", "")).strip(),
+                    objetivo,
+                    data_cliente,
                     now,
                 ),
             )
@@ -238,6 +360,8 @@ class Handler(SimpleHTTPRequestHandler):
 
 def run():
     init_db()
+    if not os.environ.get("MOSCA_ADMIN_USER") or not os.environ.get("MOSCA_ADMIN_PASSWORD"):
+        print("Aviso: painel e API de leitura desativados ate definir MOSCA_ADMIN_USER e MOSCA_ADMIN_PASSWORD.")
     server = ThreadingHTTPServer((HOST, PORT), Handler)
     print(f"Servidor ativo em http://{HOST}:{PORT}")
     print(f"Banco local: {DB_PATH}")

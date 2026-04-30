@@ -2,21 +2,21 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Painel de Leads - Coach Kama</title>
+    <title>Painel de Leads - Exemplo</title>
     <style>
-        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
         .container { max-width: 1000px; margin: 0 auto; }
         table { background: white; width: 100%; border-collapse: collapse; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background: #2c3e50; color: white; }
-        .btn { padding: 10px 20px; background: #e67e22; color: white; text-decoration: none; border-radius: 5px; }
+        .btn { padding: 10px 20px; background: #e67e22; color: white; text-decoration: none; border: 0; border-radius: 5px; cursor: pointer; }
         .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
         .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📊 Painel de Leads - Coach Kama</h1>
+        <h1>Painel de Leads - Exemplo</h1>
 
         <div class="stats">
             <div class="stat-card">
@@ -33,7 +33,7 @@
             </div>
             <div class="stat-card">
                 <h3 id="avancados">0</h3>
-                <p>Avançados</p>
+                <p>Avancados</p>
             </div>
         </div>
 
@@ -43,79 +43,106 @@
                     <th>Data/Hora</th>
                     <th>Nome</th>
                     <th>WhatsApp</th>
-                    <th>Nível</th>
+                    <th>Nivel</th>
                     <th>Objetivo</th>
-                    <th>Ação</th>
+                    <th>Acao</th>
                 </tr>
             </thead>
-            <tbody id="leadsList">
-                <!-- Leads aparecerão aqui -->
-            </tbody>
+            <tbody id="leadsList"></tbody>
         </table>
 
-        <a href="#" class="btn" onclick="exportExcel()">📥 Exportar Excel</a>
+        <button class="btn" id="exportCsvButton" type="button">Exportar CSV</button>
     </div>
 
     <script>
-        // Carregar leads do localStorage
         function carregarLeads() {
-            let leads = localStorage.getItem('leads_kama') || '[]';
-            return JSON.parse(leads);
+            try {
+                const leads = JSON.parse(localStorage.getItem("leads_kama") || "[]");
+                return Array.isArray(leads) ? leads : [];
+            } catch {
+                return [];
+            }
         }
 
-        // Atualizar estatísticas
         function atualizarStats(leads) {
-            const hoje = new Date().toLocaleDateString('pt-BR');
-            const leadsHoje = leads.filter(l => l.data.startsWith(hoje.split(' ')[0]));
+            const hoje = new Date().toLocaleDateString("pt-BR");
+            const leadsHoje = leads.filter((lead) => String(lead.data || "").startsWith(hoje));
 
-            document.getElementById('totalLeads').textContent = leads.length;
-            document.getElementById('hoje').textContent = leadsHoje.length;
-            document.getElementById('iniciantes').textContent = leads.filter(l => l.nivel === 'iniciante').length;
-            document.getElementById('avancados').textContent = leads.filter(l => l.nivel === 'avancado').length;
+            document.getElementById("totalLeads").textContent = leads.length;
+            document.getElementById("hoje").textContent = leadsHoje.length;
+            document.getElementById("iniciantes").textContent = leads.filter((lead) => lead.nivel === "iniciante").length;
+            document.getElementById("avancados").textContent = leads.filter((lead) => lead.nivel === "avancado").length;
         }
 
-        // Exibir leads na tabela
+        function appendCell(row, value) {
+            const cell = document.createElement("td");
+            cell.textContent = value == null ? "" : String(value);
+            row.appendChild(cell);
+        }
+
         function exibirLeads() {
             const leads = carregarLeads();
-            const tbody = document.getElementById('leadsList');
+            const tbody = document.getElementById("leadsList");
+            tbody.replaceChildren();
 
-            tbody.innerHTML = leads.reverse().map(lead => `
-                <tr>
-                    <td>${lead.data}</td>
-                    <td>${lead.nome}</td>
-                    <td>${lead.whatsapp}</td>
-                    <td>${lead.nivel}</td>
-                    <td>${lead.objetivo}</td>
-                    <td>
-                        <a href="https://wa.me/55${lead.whatsapp}" class="btn">WhatsApp</a>
-                    </td>
-                </tr>
-            `).join('');
+            leads.slice().reverse().forEach((lead) => {
+                const row = document.createElement("tr");
+                appendCell(row, lead.data);
+                appendCell(row, lead.nome);
+                appendCell(row, lead.whatsapp);
+                appendCell(row, lead.nivel);
+                appendCell(row, lead.objetivo);
+
+                const actionCell = document.createElement("td");
+                const whatsapp = String(lead.whatsapp || "").replace(/\D/g, "");
+                if (whatsapp) {
+                    const link = document.createElement("a");
+                    link.className = "btn";
+                    link.href = `https://wa.me/55${whatsapp}`;
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    link.textContent = "WhatsApp";
+                    actionCell.appendChild(link);
+                }
+                row.appendChild(actionCell);
+                tbody.appendChild(row);
+            });
 
             atualizarStats(leads);
         }
 
-        // Exportar para Excel
-        function exportExcel() {
-            const leads = carregarLeads();
-            let csv = "Data,Nome,WhatsApp,Nível,Objetivo\n";
-
-            leads.forEach(lead => {
-                csv += `${lead.data},"${lead.nome}",${lead.whatsapp},${lead.nivel},"${lead.objetivo}"\n`;
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'leads_coach_kama.csv';
-            a.click();
+        function csvSafe(value) {
+            const text = value == null ? "" : String(value);
+            const escaped = text.replaceAll('"', '""');
+            const safe = /^[=+\-@\t\r]/.test(escaped) ? `'${escaped}` : escaped;
+            return `"${safe}"`;
         }
 
-        // Carregar ao abrir página
-        exibirLeads();
+        function exportCsv() {
+            const leads = carregarLeads();
+            let csv = "Data,Nome,WhatsApp,Nivel,Objetivo\n";
 
-        // Atualizar a cada 30 segundos
+            leads.forEach((lead) => {
+                csv += [
+                    csvSafe(lead.data),
+                    csvSafe(lead.nome),
+                    csvSafe(lead.whatsapp),
+                    csvSafe(lead.nivel),
+                    csvSafe(lead.objetivo)
+                ].join(",") + "\n";
+            });
+
+            const blob = new Blob([csv], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.href = url;
+            anchor.download = "leads_exemplo.csv";
+            anchor.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        document.getElementById("exportCsvButton").addEventListener("click", exportCsv);
+        exibirLeads();
         setInterval(exibirLeads, 30000);
     </script>
 </body>

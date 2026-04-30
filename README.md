@@ -47,21 +47,16 @@ O botao `PT / EN` fica no topo da pagina. Apenas a escolha de idioma e salva no 
 
 ## Formulario e leads
 
-Atencao: o formulario do site usa atualmente:
+O formulario publico usa Netlify Forms:
 
-```js
-const PLANILHA_URL = "/api/leads";
-```
+- `form name="lead-mosca"`
+- `data-netlify="true"`
+- campo oculto `form-name`
+- envio para `/` com `application/x-www-form-urlencoded`
 
-Isso significa que ele depende de uma API/backend para salvar os leads. Se o site for hospedado apenas como estatico em Netlify, Cloudflare Pages ou GitHub Pages, o visual funciona, mas o envio real dos leads precisa ser adaptado.
+Para producao estatica no Netlify, publique a pasta gerada `public/`, nao a raiz do repositorio. A configuracao esta em `netlify.toml` e a estrategia completa esta documentada em `docs/deploy-netlify.md`.
 
-Opcoes recomendadas:
-
-- Netlify Forms
-- Formspree
-- Google Forms ou Google Sheets com webhook
-- Supabase
-- Backend proprio com banco de dados
+O backend Python e os bancos SQLite continuam sendo ferramentas locais/legadas e nao fazem parte do deploy estatico.
 
 ## Hospedagem gratuita recomendada
 
@@ -71,10 +66,11 @@ Melhor opcao para publicar rapido.
 
 Passos:
 
-1. Acesse `https://app.netlify.com/drop`.
-2. Envie a pasta final do projeto.
-3. O Netlify gera um link gratuito.
-4. Depois, se quiser, conecte um dominio proprio.
+1. Conecte o repositorio no Netlify.
+2. Use o build command `node scripts/build-public.mjs`.
+3. Use o publish directory `public`.
+4. Confirme em Forms se o formulario `lead-mosca` foi detectado apos o primeiro deploy.
+5. Depois, se quiser, conecte um dominio proprio.
 
 Recomendado se for usar Netlify Forms para captar leads.
 

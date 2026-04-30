@@ -1,0 +1,56 @@
+:root {
+  --color-bg: #090f18;
+  --color-bg-deep: #070b12;
+  --color-bg-elevated: #101826;
+  --color-surface: rgba(11, 17, 26, 0.82);
+  --color-surface-soft: rgba(255, 255, 255, 0.05);
+  --color-surface-strong: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-border-gold: rgba(214, 180, 108, 0.28);
+  --color-text: #f6f0e6;
+  --color-text-soft: #c5ccd8;
+  --color-text-muted: #7f8893;
+  --color-gold: #d6b46c;
+  --color-gold-strong: #f1d28c;
+  --color-blue: #4f77b9;
+  --color-blue-strong: #76b4ff;
+  --color-red: #b5453c;
+  --color-success: #61b490;
+  --color-error: #d06b63;
+
+  --font-display: Cinzel, Georgia, serif;
+  --font-body: Rajdhani, "Segoe UI", Arial, sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 3rem;
+  --font-size-display: clamp(2.8rem, 6vw, 5.8rem);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  --shadow-panel: 0 24px 70px rgba(0, 0, 0, 0.34);
+  --shadow-panel-strong: 0 32px 92px rgba(0, 0, 0, 0.42);
+  --shadow-focus: 0 0 0 4px rgba(214, 180, 108, 0.12);
+
+  --layout-max-width: 1180px;
+  --breakpoint-tablet: 1080px;
+  --breakpoint-mobile: 760px;
+}

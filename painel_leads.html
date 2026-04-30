@@ -286,7 +286,7 @@
         }
 
         function planoLabel(value) {
-            if (value === "avulso") return "Avulso";
+            if (value === "avulso-1h") return "Avulso (1h)";
             if (value === "pacote-6h") return "Pacote 6h";
             if (value === "pacote-12h") return "Pacote 12h";
             return value || "-";
@@ -300,29 +300,54 @@
         }
 
         function renderRows(items) {
+            el.tbody.replaceChildren();
+
             if (!items.length) {
-                el.tbody.innerHTML = '<tr><td colspan="8"><span class="danger">Nenhum lead encontrado para esse filtro.</span></td></tr>';
+                const row = document.createElement("tr");
+                const cell = document.createElement("td");
+                const message = document.createElement("span");
+                cell.colSpan = 8;
+                message.className = "danger";
+                message.textContent = "Nenhum lead encontrado para esse filtro.";
+                cell.appendChild(message);
+                row.appendChild(cell);
+                el.tbody.appendChild(row);
                 return;
             }
 
-            el.tbody.innerHTML = items.map((item) => {
-                return `
-                    <tr>
-                        <td>${item.id}</td>
-                        <td><small>${formatDate(item.created_at)}</small></td>
-                        <td>${escapeHtml(item.nome)}</td>
-                        <td>${escapeHtml(item.whatsapp)}</td>
-                        <td>${item.elo}</td>
-                        <td><span class="pill">${planoLabel(item.plano)}</span></td>
-                        <td>${item.horas_avulsas || "-"}</td>
-                        <td>${escapeHtml(item.objetivo || "-")}</td>
-                    </tr>
-                `;
-            }).join("");
+            const fragment = document.createDocumentFragment();
+
+            items.forEach((item) => {
+                const row = document.createElement("tr");
+                appendCell(row, item.id);
+
+                const dateCell = document.createElement("td");
+                const small = document.createElement("small");
+                small.textContent = formatDate(item.created_at);
+                dateCell.appendChild(small);
+                row.appendChild(dateCell);
+
+                appendCell(row, item.nome);
+                appendCell(row, item.whatsapp);
+                appendCell(row, item.elo);
+
+                const planCell = document.createElement("td");
+                const pill = document.createElement("span");
+                pill.className = "pill";
+                pill.textContent = planoLabel(item.plano);
+                planCell.appendChild(pill);
+                row.appendChild(planCell);
+
+                appendCell(row, item.horas_avulsas || "-");
+                appendCell(row, item.objetivo || "-");
+                fragment.appendChild(row);
+            });
+
+            el.tbody.appendChild(fragment);
         }
 
         function renderStats(items) {
-            const avulso = items.filter((i) => i.plano === "avulso").length;
+            const avulso = items.filter((i) => i.plano === "avulso-1h").length;
             const p6 = items.filter((i) => i.plano === "pacote-6h").length;
             const p12 = items.filter((i) => i.plano === "pacote-12h").length;
 
@@ -332,11 +357,10 @@
             el.s12h.textContent = p12;
         }
 
-        function escapeHtml(text) {
-            return String(text)
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;");
+        function appendCell(row, value) {
+            const cell = document.createElement("td");
+            cell.textContent = value == null ? "-" : String(value);
+            row.appendChild(cell);
         }
 
         async function loadLeads() {
@@ -352,13 +376,18 @@
                 renderStats(data.items || []);
                 el.status.textContent = `Atualizado: ${new Date().toLocaleString("pt-BR")} • ${data.count || 0} lead(s).`;
             } catch (error) {
-                el.status.innerHTML = '<span class="danger">Erro ao carregar leads. Verifique se o servidor local esta ativo.</span>';
+                el.status.replaceChildren();
+                const message = document.createElement("span");
+                message.className = "danger";
+                message.textContent = "Erro ao carregar leads. Verifique se o servidor local esta ativo e se a autenticacao foi informada.";
+                el.status.appendChild(message);
             }
         }
 
         function exportCsv() {
             const query = toQuery(getFilters());
-            window.open(`/api/leads.csv?${query}`, "_blank");
+            const win = window.open(`/api/leads.csv?${query}`, "_blank", "noopener,noreferrer");
+            if (win) win.opener = null;
         }
 
         function resetFilters() {
