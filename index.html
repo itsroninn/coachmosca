@@ -2407,11 +2407,11 @@
 
     <div class="language-widget" id="languageWidget">
         <div class="language-menu" id="languageMenu" aria-hidden="true">
-            <button class="language-option" type="button" data-lang-option="pt">
+            <button class="language-option" type="button" data-lang-option="pt" tabindex="-1">
                 <span>Português</span>
                 <span>PT</span>
             </button>
-            <button class="language-option" type="button" data-lang-option="en">
+            <button class="language-option" type="button" data-lang-option="en" tabindex="-1">
                 <span>English</span>
                 <span>EN</span>
             </button>
@@ -2843,7 +2843,7 @@
                 "contact.stat3": "dias de validade",
                 "contact.item1": "Atendimento individual conforme disponibilidade do coach.",
                 "contact.item2": "Contato feito pelo WhatsApp informado no formulário.",
-                "contact.item3": "O formulário envia os dados apenas para a API configurada, sem armazenar leads no navegador.",
+                "contact.item3": "Após o cadastro, montaremos o melhor plano para seu perfil como player.",
                 "contact.note": "Informe seu elo e objetivo para facilitar o diagnóstico inicial.",
                 "form.title": "Formulário de interesse",
                 "form.name": "Seu nome",
@@ -2954,7 +2954,7 @@
                 "contact.stat3": "days of validity",
                 "contact.item1": "Private coaching based on the coach's availability.",
                 "contact.item2": "Contact will be made through the WhatsApp number provided in the form.",
-                "contact.item3": "The form sends data only to the configured API and does not store leads in the browser.",
+                "contact.item3": "After registration, we will build the best plan for your player profile.",
                 "contact.note": "Share your rating and goal to make the initial diagnosis easier.",
                 "form.title": "Interest form",
                 "form.name": "Your name",
@@ -3044,6 +3044,9 @@
             languageWidget.classList.toggle("is-open", open);
             languageToggle.setAttribute("aria-expanded", String(open));
             languageMenu.setAttribute("aria-hidden", String(!open));
+            languageMenu.querySelectorAll("button").forEach((button) => {
+                button.tabIndex = open ? 0 : -1;
+            });
         }
 
         leadForm.addEventListener("submit", async function (event) {
